@@ -20,7 +20,7 @@
 #endif
 
 #define MAX_TEXT_RESPONSE (4096) // max lenght text response
-#define FREE_GROQ_KEY "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"
+#define FREE_GROQ_KEY "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"
 #define using_free_
 #if defined using_free_
     #define API_KEY        FREE_GROQ_KEY // free key
