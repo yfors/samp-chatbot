@@ -19,17 +19,17 @@
     #include <discord-connector>
 #endif
 
-#define MAX_TEXT_RESPONSE (4096) // max lenght text response
+#define MAX_TEXT_RESPONSE (4096)                                            // max lenght text response
 //
 #define API_KEY "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" // your api token
 //
-#define API_MODEL      "llama3-8b-8192" // your default api model
+#define API_MODEL      "llama3-8b-8192"                                   // your default api model
 //
-#define API_STATUS     "🔥🔥" // your bot activity status
+#define API_STATUS     "🔥🔥"                                            // your bot activity status
 //
-#define API_C_T_MODEL  (1200000) // time per-miliseconds change a.i model
+#define API_C_T_MODEL  (1200000)                                        // time miliseconds change a.i model
 //
-#define first_question "welcome message" // first question
+#define first_question "welcome message"                               // first question
 //
 #include "samp-chatbot.inc"
 
@@ -60,18 +60,18 @@ enum
 new __SYS_PROMPT [ 128 ],
     __SYS_RESPONSE [ MAX_PLAYERS ][ MAX_TEXT_RESPONSE ];
 
-#define func::%0(%1) \ // forward & public function
+#define func::%0(%1) \             // forward & public function
     forward %0(%1); \
     public %0(%1)
-#define __func:: \ // stock
+#define __func:: \             // stock
     stock
-#define logprintf \ // print format
+#define logprintf \          // print format
     printf
-#define logprint \ // print
+#define logprint \         // print
     print
-#define elif \ // else if
+#define elif \          // else if
     else if
-#define ret(%0) \ // return
+#define ret(%0) \     // return
     return %0
 
 #define @resetprompt \
