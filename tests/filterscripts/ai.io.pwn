@@ -15,7 +15,7 @@
 
 #define __DCC
 #if defined __DCC
-    #define API_CHANNEL      "0123456789" // your channel
+    #define API_CHANNEL      "0000111100001111" // your channel
     #include <discord-connector>
 #endif
 
@@ -92,20 +92,20 @@ public __model_AI ()
     new rand = random ( 4 ) + 1;
     switch ( rand ) {
         case 1: {
-            SetModel "gemma2-9b-it";
+            SetModel "gemma2-9b-it"; // gemma
         }
         case 2: {
-            SetModel "llama3-70b-8192";
+            SetModel "llama3-70b-8192"; // llma 3
         }
         case 3: {
-            SetModel "llama-3.3-70b-specdec";
+            SetModel "llama-3.3-70b-specdec"; // llma 3.3
         }
         case 4: {
             goto __default;
         }
     }
 
-__default:
+__default: // default here
     SetModel API_MODEL;
 
     ret(1);
