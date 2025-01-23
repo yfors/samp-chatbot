@@ -60,18 +60,18 @@ enum
 new __SYS_PROMPT [ 128 ],
     __SYS_RESPONSE [ MAX_PLAYERS ][ MAX_TEXT_RESPONSE ];
 
-#define func::%0(%1) \
+#define func::%0(%1) \ // forward & public function
     forward %0(%1); \
     public %0(%1)
-#define __func:: \
+#define __func:: \ // stock
     stock
-#define logprintf \
+#define logprintf \ // print format
     printf
-#define logprint \
+#define logprint \ // print
     print
-#define elif \
+#define elif \ // else if
     else if
-#define ret(%0) \
+#define ret(%0) \ // return
     return %0
 
 #define @resetprompt \
