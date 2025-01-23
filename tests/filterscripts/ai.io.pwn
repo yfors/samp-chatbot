@@ -60,10 +60,10 @@ enum
 new __SYS_PROMPT [ 128 ],
     __SYS_RESPONSE [ MAX_PLAYERS ][ MAX_TEXT_RESPONSE ];
 
-#define @def->%0(%1) \
+#define func::%0(%1) \
     forward %0(%1); \
     public %0(%1)
-#define __@def-> \
+#define __func:: \
     stock
 #define logprintf \
     printf
@@ -76,7 +76,7 @@ new __SYS_PROMPT [ 128 ],
 
 #define @resetprompt \
     SetSystemPrompt("");
-__@def -> SetSystemPromptEx(__prompt[] = "Assistant")
+__func::SetSystemPromptEx(__prompt[] = "Assistant")
 {
     @resetprompt
     SetSystemPrompt __prompt;
@@ -112,7 +112,7 @@ __default: // default here
 }
 
 #define Initialize. Initialize_
-@def -> Initialize_AI ()
+func::Initialize_AI ()
 {
     SelectChatBot LLAMA;
     SetAPIKey API_KEY;
@@ -229,7 +229,7 @@ public OnPlayerText (playerid, text[])
         strmid(prompt, text[2], 0, sizeof(prompt), strlen(text));
 
         if ( strlen ( prompt ) < 1) {
-            new rand = random ( 10 ) + 1;
+            new rand = random ( 5 ) + 1;
             switch ( rand ) {
                 case 1:
                      SendClientMessage playerid, -1, __SYS_PROMPT;
@@ -243,7 +243,7 @@ public OnPlayerText (playerid, text[])
                     format(fmt, sizeof(fmt), "%s", __fmt);
                     SendClientMessage playerid, -1, fmt;
                 }
-                case 4 .. 10:
+                case 4 .. 5:
                 {
                     new __rand = random(sizeof(__rand_words));
                     new __fmt [ 32 ];
