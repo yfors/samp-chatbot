@@ -90,18 +90,18 @@ __@def -> SetSystemPromptEx(__prompt[] = "Assistant")
 forward __model_AI ();
 public __model_AI ()
 {
-    new rand = random ( 8 ) + 1;
+    new rand = random ( 4 ) + 1;
     switch ( rand ) {
-        case 1 .. 2: {
+        case 1: {
             SetModel "gemma2-9b-it";
         }
-        case 3 .. 4: {
+        case 2: {
             SetModel "llama3-70b-8192";
         }
-        case 5 .. 6: {
+        case 3: {
             SetModel "llama-3.3-70b-specdec";
         }
-        case 7 .. 8: {
+        case 4: {
             goto __default;
         }
     }
