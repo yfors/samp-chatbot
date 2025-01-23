@@ -20,12 +20,17 @@
 #endif
 
 #define MAX_TEXT_RESPONSE (4096) // max lenght text response
+//
 #define API_KEY "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" // your api token
-
+//
 #define API_MODEL      "llama3-8b-8192" // your default api model
+//
 #define API_STATUS     "🔥🔥" // your bot activity status
+//
 #define API_C_T_MODEL  (1200000) // time per-miliseconds change a.i model
+//
 #define first_question "welcome message" // first question
+//
 #include "samp-chatbot.inc"
 
 new DCC_Channel:__channel;
