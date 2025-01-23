@@ -39,7 +39,7 @@ new DCC_Channel:__channel;
 
 new __request;
 
-new __rand_words[][] = {
+new __rand_words[][] = { // random words
     "Apple", "Balloon", "Computer", "Dolphin", "Elephant", 
     "Forest", "Giraffe", "House", "Island", "Jungle", 
     "Kangaroo", "Lemon", "Mountain", "Night", "Ocean", 
