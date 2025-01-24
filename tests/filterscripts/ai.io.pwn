@@ -60,23 +60,23 @@ enum
 new __SYS_PROMPT [ 128 ],
     __SYS_RESPONSE [ MAX_PLAYERS ][ MAX_TEXT_RESPONSE ];
 
-#define func::%0(%1) \             // forward & public function
+#define func::%0(%1) \             
     forward %0(%1); \
     public %0(%1)
-#define __func:: \             // stock
+#define __func:: \             
     stock
-#define logprintf \          // print format
+#define logprintf \          
     printf
-#define logprint \         // print
+#define logprint \         
     print
-#define elif \          // else if
+#define elif \          
     else if
-#define ret(%0) \     // return
+#define ret(%0) \     
     return %0
 
 #define @resetprompt \
     SetSystemPrompt("");
-__func::SetSystemPromptEx(__prompt[] = "Assistant")
+__func:: SetSystemPromptEx(__prompt[] = "Assistant")
 {
     @resetprompt
     SetSystemPrompt __prompt;
@@ -112,18 +112,22 @@ __default: // default here
 }
 
 #define Initialize. Initialize_
-func::Initialize_AI ()
+func:: Initialize_AI ()
 {
     SelectChatBot LLAMA;
     SetAPIKey API_KEY;
     SetModel API_MODEL;
     SetSystemPromptEx;
-    DCC_SetBotActivity API_STATUS;
 
+#if defined __DCC
+    DCC_SetBotActivity API_STATUS;
+#endif
     __request = 0;
 
+#if defined __DCC
     @resetchannel
     __channel = DCC_FindChannelById(API_CHANNEL);
+#endif
 
     new fmt [ 128 ];
     format fmt, sizeof ( fmt ), "%s is Online!", __SYS_PROMPT;
@@ -268,9 +272,10 @@ public OnPlayerText (playerid, text[])
 public OnChatBotResponse (prompt[],
                           response[], id)
 {
+#if defined __DCC
     @resetchannel
     __channel = DCC_FindChannelById(API_CHANNEL);
-
+#endif
     if ( IsPlayerConnected(id) )
     {
         format __SYS_RESPONSE[id], MAX_TEXT_RESPONSE, "%s", response;
