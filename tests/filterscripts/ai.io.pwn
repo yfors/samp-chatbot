@@ -160,6 +160,11 @@ public OnPlayerSpawn ( \
 #if defined __DCC
     public DCC_OnMessageCreate ( DCC_Message: message )
     {
+        /**
+         * Example: "ai, How Are you?"
+         * Example: "ai, My name is socket, you?"
+         * Example: "ai, What is Los Santos?"
+         */
         new
             __msg_content [ 144 + 1 ],
             DCC_User:__author,
@@ -229,6 +234,11 @@ public OnPlayerSpawn ( \
 
 public OnPlayerText (playerid, text[])
 {
+    /**
+        * Example: "ai, How Are you?"
+        * Example: "ai, My name is socket, you?"
+        * Example: "ai, What is Los Santos?"
+    */
     if ( strfind ( text, "ai", true ) == 0 )
     {
         new prompt[ 144 ];
