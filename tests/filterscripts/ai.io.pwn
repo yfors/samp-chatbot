@@ -71,8 +71,10 @@ new __SYS_PROMPT [ 128 ],
     print
 #define elif \          
     else if
-#define ret(%0) \     
-    return %0
+#define Ok \
+    return 1;
+#define None \
+    return 0;
 
 #define @resetprompt \
     SetSystemPrompt("");
@@ -83,7 +85,7 @@ __func:: SetSystemPromptEx(__prompt[] = "Assistant")
 
     format __SYS_PROMPT, sizeof ( __SYS_PROMPT ), "%s", __prompt;
 
-    ret(1);
+    Ok;
 }
 
 forward __model_AI ();
@@ -108,7 +110,7 @@ public __model_AI ()
 __default: // default here
     SetModel API_MODEL;
 
-    ret(1);
+    Ok;
 }
 
 #define Initialize. Initialize_
@@ -135,18 +137,18 @@ func:: Initialize_AI ()
 
     SetTimer "__model_AI", API_C_T_MODEL, true;
 
-    ret(1);
+    Ok;
 }
 
 public OnFilterScriptInit ()
 {
     Initialize.AI();
-    ret(1);
+    Ok;
 }
 
 public OnFilterScriptExit ()
 {
-    ret(1);
+    Ok;
 }
 
 public OnPlayerSpawn ( \ 
@@ -154,7 +156,7 @@ public OnPlayerSpawn ( \
 {
     RequestToChatBot first_question, playerid;
 
-    ret(1);
+    Ok;
 }
 
 #if defined __DCC
@@ -180,7 +182,7 @@ public OnPlayerSpawn ( \
     
         if ( __isBot )
         {
-            ret(0);
+            None;
         }
     
         if ( strfind ( __msg_content, "ai", true ) == 0 )
@@ -209,10 +211,9 @@ public OnPlayerSpawn ( \
             ++__request;
             RequestToChatBot(prompt, _:__author);
     
-            ret(0);
+            None;
         }
-    
-        ret(1);
+        Ok;
     }
 #endif
 
@@ -249,10 +250,9 @@ public OnPlayerText (playerid, text[])
         ++__request;
         RequestToChatBot prompt, playerid;
 
-        ret(0);
-
+        None;
     }
-    ret(1);
+    Ok;
 }
 
 public OnChatBotResponse (prompt[],
@@ -291,6 +291,6 @@ public OnChatBotResponse (prompt[],
 #if defined __DEBUG
     printf "response=%d, request=%d", id, __request;
 #endif
-    ret(1);
+    Ok;
 }
 
