@@ -17,6 +17,10 @@
 #if defined __DCC
     #define API_CHANNEL      "0000111100001111" // your channel
     #include <discord-connector>
+
+    new DCC_Channel:__channel;
+    #define @resetchannel \
+        __channel = DCC_FindChannelById("");
 #endif
 
 #define MAX_TEXT_RESPONSE (4096)                                            // max lenght text response
@@ -32,12 +36,6 @@
 #define first_question "welcome message"                               // first question
 //
 #include "samp-chatbot.inc"
-
-#if defined __DCC
-    new DCC_Channel:__channel;
-    #define @resetchannel \
-        __channel = DCC_FindChannelById("");
-#endif
 
 new __request;
 
@@ -129,11 +127,11 @@ func:: Initialize_AI ()
 #if defined __DCC
     @resetchannel
     __channel = DCC_FindChannelById(API_CHANNEL);
-#endif
 
     new fmt [ 128 ];
     format fmt, sizeof ( fmt ), "%s is Online!", __SYS_PROMPT;
     DCC_SendChannelMessage __channel, fmt;
+#endif
 
     SetTimer "__model_AI", API_C_T_MODEL, true;
 
