@@ -157,73 +157,75 @@ public OnPlayerSpawn ( \
     ret(1);
 }
 
-public DCC_OnMessageCreate ( DCC_Message: message )
-{
-    new
-        __msg_content [ 144 + 1 ],
-        DCC_User:__author,
-        bool:__isBot
-    ;
-
-    @resetchannel
-    __channel = DCC_FindChannelById(API_CHANNEL);
-
-    DCC_GetMessageContent (message, __msg_content);
-    DCC_GetMessageAuthor (message, __author);
-    DCC_IsUserBot (__author, __isBot);
-
-    if ( __isBot )
+#if defined __DCC
+    public DCC_OnMessageCreate ( DCC_Message: message )
     {
-        ret(0);
-    }
-
-    if ( strfind ( __msg_content, "ai", true ) == 0 )
-    {
-        new prompt[144];
-        strmid(prompt, __msg_content[2], 0, sizeof(prompt), strlen(__msg_content));
-
-        if ( strlen ( prompt ) < 1) {
-            new rand = random ( 5 ) + 1;
-            switch ( rand ) {
-                case 1:
-                    #if defined __DCC
-                        DCC_SendChannelMessage __channel, __SYS_PROMPT;
-                    #endif
-                case 2 .. 3:
-                {
-                    #if defined __DCC
-                        new __rand = random(sizeof(__rand_words));
-                        new __fmt [ 32 ];
-                        strmid(__fmt, __rand_words[rand], 0, strlen(__rand_words[__rand]), 31);
-                        
-                        new fmt [ 128 ];
-                        format(fmt, sizeof(fmt), "%s", __fmt);
-                        DCC_SendChannelMessage __channel, fmt;
-                    #endif
-                }
-                case 4 .. 5:
-                {
-                    #if defined __DCC
-                        new __rand = random(sizeof(__rand_words));
-                        new __fmt [ 32 ];
-                        strmid(__fmt, __rand_words[rand], 0, strlen(__rand_words[__rand]), 31);
-                        
-                        new fmt [ 128 ];
-                        format(fmt, sizeof(fmt), "%s", __fmt);
-                        DCC_SendChannelMessage __channel, fmt;
-                    #endif
+        new
+            __msg_content [ 144 + 1 ],
+            DCC_User:__author,
+            bool:__isBot
+        ;
+    
+        @resetchannel
+        __channel = DCC_FindChannelById(API_CHANNEL);
+    
+        DCC_GetMessageContent (message, __msg_content);
+        DCC_GetMessageAuthor (message, __author);
+        DCC_IsUserBot (__author, __isBot);
+    
+        if ( __isBot )
+        {
+            ret(0);
+        }
+    
+        if ( strfind ( __msg_content, "ai", true ) == 0 )
+        {
+            new prompt[144];
+            strmid(prompt, __msg_content[2], 0, sizeof(prompt), strlen(__msg_content));
+    
+            if ( strlen ( prompt ) < 1) {
+                new rand = random ( 5 ) + 1;
+                switch ( rand ) {
+                    case 1:
+                        #if defined __DCC
+                            DCC_SendChannelMessage __channel, __SYS_PROMPT;
+                        #endif
+                    case 2 .. 3:
+                    {
+                        #if defined __DCC
+                            new __rand = random(sizeof(__rand_words));
+                            new __fmt [ 32 ];
+                            strmid(__fmt, __rand_words[rand], 0, strlen(__rand_words[__rand]), 31);
+                            
+                            new fmt [ 128 ];
+                            format(fmt, sizeof(fmt), "%s", __fmt);
+                            DCC_SendChannelMessage __channel, fmt;
+                        #endif
+                    }
+                    case 4 .. 5:
+                    {
+                        #if defined __DCC
+                            new __rand = random(sizeof(__rand_words));
+                            new __fmt [ 32 ];
+                            strmid(__fmt, __rand_words[rand], 0, strlen(__rand_words[__rand]), 31);
+                            
+                            new fmt [ 128 ];
+                            format(fmt, sizeof(fmt), "%s", __fmt);
+                            DCC_SendChannelMessage __channel, fmt;
+                        #endif
+                    }
                 }
             }
+    
+            ++__request;
+            RequestToChatBot(prompt, _:__author);
+    
+            ret(0);
         }
-
-        ++__request;
-        RequestToChatBot(prompt, _:__author);
-
-        ret(0);
+    
+        ret(1);
     }
-
-    ret(1);
-}
+#endif
 
 public OnPlayerText (playerid, text[])
 {
