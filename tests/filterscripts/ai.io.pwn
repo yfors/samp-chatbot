@@ -192,32 +192,16 @@ public OnPlayerSpawn ( \
                 new rand = random ( 5 ) + 1;
                 switch ( rand ) {
                     case 1:
-                        #if defined __DCC
-                            DCC_SendChannelMessage __channel, __SYS_PROMPT;
-                        #endif
-                    case 2 .. 3:
+                        DCC_SendChannelMessage __channel, __SYS_PROMPT;
+                    case 2 .. 5:
                     {
-                        #if defined __DCC
-                            new __rand = random(sizeof(__rand_words));
-                            new __fmt [ 32 ];
-                            strmid(__fmt, __rand_words[rand], 0, strlen(__rand_words[__rand]), 31);
+                        new __rand = random(sizeof(__rand_words));
+                        new __fmt [ 32 ];
+                        strmid(__fmt, __rand_words[rand], 0, strlen(__rand_words[__rand]), 31);
                             
-                            new fmt [ 128 ];
-                            format(fmt, sizeof(fmt), "%s", __fmt);
-                            DCC_SendChannelMessage __channel, fmt;
-                        #endif
-                    }
-                    case 4 .. 5:
-                    {
-                        #if defined __DCC
-                            new __rand = random(sizeof(__rand_words));
-                            new __fmt [ 32 ];
-                            strmid(__fmt, __rand_words[rand], 0, strlen(__rand_words[__rand]), 31);
-                            
-                            new fmt [ 128 ];
-                            format(fmt, sizeof(fmt), "%s", __fmt);
-                            DCC_SendChannelMessage __channel, fmt;
-                        #endif
+                        new fmt [ 128 ];
+                        format(fmt, sizeof(fmt), "%s", __fmt);
+                        DCC_SendChannelMessage __channel, fmt;
                     }
                 }
             }
@@ -249,17 +233,7 @@ public OnPlayerText (playerid, text[])
             switch ( rand ) {
                 case 1:
                      SendClientMessage playerid, -1, __SYS_PROMPT;
-                case 2 .. 3:
-                {
-                    new __rand = random(sizeof(__rand_words));
-                    new __fmt [ 32 ];
-                    strmid(__fmt, __rand_words[rand], 0, strlen(__rand_words[__rand]), 31);
-                        
-                    new fmt [ 128 ];
-                    format(fmt, sizeof(fmt), "%s", __fmt);
-                    SendClientMessage playerid, -1, fmt;
-                }
-                case 4 .. 5:
+                case 2 .. 5:
                 {
                     new __rand = random(sizeof(__rand_words));
                     new __fmt [ 32 ];
