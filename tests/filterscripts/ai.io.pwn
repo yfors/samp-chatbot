@@ -33,9 +33,11 @@
 //
 #include "samp-chatbot.inc"
 
-new DCC_Channel:__channel;
-#define @resetchannel \
-    __channel = DCC_FindChannelById("");
+#if defined __DCC
+    new DCC_Channel:__channel;
+    #define @resetchannel \
+        __channel = DCC_FindChannelById("");
+#endif
 
 new __request;
 
