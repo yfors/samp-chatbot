@@ -13,7 +13,7 @@
 
 #define __DEBUG
 
-#define __DCC
+#define __DCC // no discord? remove here
 #if defined __DCC
     #define API_CHANNEL      "0000111100001111" // your channel
     #include <discord-connector>
