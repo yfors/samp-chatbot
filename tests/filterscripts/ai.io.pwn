@@ -16,7 +16,7 @@
 
 #define __DCC // no discord? remove here
 #if defined __DCC
-    #define API_CHANNEL      "0000111100001111" // @summary If you don't change the value in this definition then if you activate the AI ​​Discord chat-bot there will be no response.
+    #define API_CHANNEL      "0000111100001111" /// @summary If you don't change the value in this definition then if you activate the AI ​​Discord chat-bot there will be no response.
 
     #include <discord-connector>
 
