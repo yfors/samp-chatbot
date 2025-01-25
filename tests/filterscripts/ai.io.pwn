@@ -173,7 +173,7 @@ public OnPlayerSpawn ( \
         DCC_GetMessageAuthor (message, __author);
         DCC_IsUserBot (__author, __isBot);
     
-        if ( __isBot )
+        if ( __isBot ) // fix loop, check chat is not from bot
         {
             return 0;
         }
