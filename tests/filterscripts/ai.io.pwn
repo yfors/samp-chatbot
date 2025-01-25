@@ -26,24 +26,13 @@
     /// ^ override channel-id
 #endif
 
-#define MAX_TEXT_RESPONSE (4096)                                            // max lenght text response
+static MAX_TEXT_RESPONSE = 4096;                                            // maximum length of text response
 #define API_KEY "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" // your api token
 #define API_MODEL      "llama3-8b-8192"                                   // your default api model
 #define API_STATUS     "🔥🔥"                                            // your bot activity status
 #define API_TIMER  (1200000)                                            // time miliseconds change a.i model
 #define FIRST_QUEST "welcome message"                                  // first question
 #include "samp-chatbot.inc"
-
-#define func::%0(%1) \             
-    forward %0(%1); \
-    public %0(%1)
-/// ^ function
-#define _func:: \             
-    stock
-/// ^ stock
-#define elif \          
-    else if
-/// ^ else if
 
 #define MAX_FMT_STRING (520)
 new string_[ MAX_FMT_STRING ];
@@ -52,7 +41,7 @@ new string_[ MAX_FMT_STRING ];
     string_ = "";
 /// ^ override string_
 
-new _request_;
+new request;
 
 new _rand_words_[][] = { // random words
     "Apple", "Balloon", "Computer", "Dolphin", "Indonesia", 
@@ -67,12 +56,12 @@ enum
 
 new req_msg[ MAX_PLAYERS ] [ 520 ];
 new GetSystemPrompt [ 128 ],
-    GetSystemResponse [ MAX_PLAYERS ][ MAX_TEXT_RESPONSE ];
+    GetSystemResponse [ MAX_PLAYERS ][ 4096 ];
 
 #define @resetprompt \
     SetSystemPrompt("");
 /// ^ override prompt
-_func:: SetSystemPromptEx(__prompt[] = "Assistant")
+stock SetSystemPromptEx(__prompt[] = "Assistant")
 {
     @resetprompt
     SetSystemPrompt __prompt;
@@ -105,7 +94,8 @@ default_model: // default here
 }
 
 #define Initialize. Initialize_
-func:: Initialize_AI ()
+forward Initialize_AI ()
+public Initialize_AI ()
 {
     SelectChatBot LLAMA;
     SetAPIKey API_KEY;
@@ -115,7 +105,7 @@ func:: Initialize_AI ()
 #if defined __DCC
     DCC_SetBotActivity API_STATUS;
 #endif
-    _request_ = 0;
+    request = 0;
 
 #if defined __DCC
     @resetchannel
@@ -199,7 +189,7 @@ public DCC_OnMessageCreate ( DCC_Message: message )
 
         req_msg[_:__author] = prompt;
 
-        ++_request_;
+        ++request;
         RequestToChatBot(prompt, _:__author);
 
         return 0;
@@ -242,7 +232,7 @@ public OnPlayerText (playerid, text[])
 
         req_msg[playerid] = prompt;
 
-        ++_request_;
+        ++request;
         RequestToChatBot prompt, playerid;
 
         return 0;
@@ -261,7 +251,10 @@ public OnChatBotResponse (prompt[],
     new resLenght = strlen(response);
     if ( IsPlayerConnected(id) )
     {
-        if ( resLenght < 144 ) { /// @summary if the chat is below 144 it will be given in the form of a player message
+        new len_ = 144;
+        if ( resLenght < len_ ) { /// @summary if the chat is below 144 it will be given in the form of a player message
+
+            MAX_TEXT_RESPONSE = len_; // max message
 
             format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
 
@@ -271,6 +264,10 @@ public OnChatBotResponse (prompt[],
         }
         else { /// @summary otherwise it will be given in the form of player dialogue
 
+            len_ = 512; // max info dialog
+
+            MAX_TEXT_RESPONSE = len_;
+            
             format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
 
             new _username_[ MAX_PLAYER_NAME + 1 ];
@@ -279,30 +276,29 @@ public OnChatBotResponse (prompt[],
             @resetstring
             format string_, sizeof(string_), "{FFF070}Hi, %s", _username_;
 
-            ShowPlayerDialog id, \
-                CHATBOT_DIALOG, \
-                    DIALOG_STYLE_MSGBOX, \
-                        string_, GetSystemResponse[id], \
+            ShowPlayerDialog id,
+                CHATBOT_DIALOG,
+                    DIALOG_STYLE_MSGBOX,
+                        string_, GetSystemResponse[id],
                             "Close", "";
         }
     } else {
 #if defined __DCC
+        new len_ = 2000; // max discord message
         if ( resLenght < 1 ) { // no response
-            //DCC_SendChannelMessage __channel, "ERR, Try Angain Later!"; // debug
-            printf "\nERR.. response:%d, request:%d, reason:%s\n", id, _request_, "No Response";
+            printf "\nERR.. response:%d, request:%d, reason:%s\n", id, request, "No Response";
 
-            --_request_;
+            --request;
 
             neq = 1;
-        } elif ( resLenght > 2000 ) { // discord limit message
-            //DCC_SendChannelMessage __channel, "ERR, Try Angain Later!"; // debug
-            printf "\nERR.. response:%d, request:%d, reason:%s\n", id, _request_, "Limit Response";
+        } else if ( resLenght > len_ ) { // discord limit message
+            printf "\nERR.. response:%d, request:%d, reason:%s\n", id, request, "Limit Response";
 
             new __fmt[200];
             format __fmt, sizeof(__fmt), "%s%s", req_msg[id], "..simple"; // simple response. for fix limit message
             req_msg[id] = __fmt;
 
-            ++_request_;
+            ++request;
             RequestToChatBot(req_msg[id], id);
 
             neq = 1;
@@ -315,10 +311,10 @@ public OnChatBotResponse (prompt[],
 
 #if defined __DEBUG
     if ( neq == 0 ) {
-        if ( _request_ == 1 )
-            printf "\nresponse=%d, request=%d, lenght=%d", id, _request_, resLenght;
+        if ( request == 1 )
+            printf "\nresponse=%d, request=%d, lenght=%d", id, request, resLenght;
         else
-            printf "response=%d, request=%d, lenght=%d", id, _request_, resLenght;
+            printf "response=%d, request=%d, lenght=%d", id, request, resLenght;
     }
 #endif
     return 1;
