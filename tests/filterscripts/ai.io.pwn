@@ -53,11 +53,6 @@ new _rand_words_[][] = { // random words
     "Apple", "Balloon", "Computer", "Dolphin", "Elephant", 
     "Forest", "Giraffe", "House", "Island", "Jungle", 
     "Kangaroo", "Lemon", "Mountain", "Night", "Ocean", 
-    "Penguin", "Queen", "Rainbow", "Sunflower", "Tree", 
-    "Unicorn", "Volcano", "Waterfall", "Xylophone", "Zebra", 
-    "Apricot", "Bicycle", "Cloud", "Dragon", "Eagle", 
-    "Flower", "Garden", "Helicopter", "Iceberg", "Jellyfish", 
-    "Koala", "Lighthouse", "Moonlight", "Necklace", "Owl", 
     "Parrot", "Quokka", "River", "Starfish", "Turtle", 
     "Umbrella", "Vase", "Whale", "Yacht", "Zucchini"
 }; /// @summary The random chat function is for combined random chat if you only send the message "ai" without adding any questions.
