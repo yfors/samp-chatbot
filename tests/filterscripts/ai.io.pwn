@@ -261,14 +261,6 @@ public OnChatBotResponse (prompt[],
     new resLenght = strlen(response);
     if ( IsPlayerConnected(id) )
     {
-        if ( resLenght < 1 ) { // no response
-            //SendClientMessage id, -1, "ERR, Try Angain Later!"; // debug
-            printf "\nERR.. response:%d, request:%d, reason:%s\n", id, _request_, "No Response";
-
-            --_request_;
-
-            neq = 1;
-        }
         if ( resLenght < 144 ) { /// @summary if the chat is below 144 it will be given in the form of a player message
 
             format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
@@ -276,19 +268,6 @@ public OnChatBotResponse (prompt[],
             @resetstring
             format string_, sizeof(string_), "%s", GetSystemResponse[id];
             SendClientMessage id, -1, string_;
-        }
-        elif ( resLenght > 512 ) { // max info dialog
-            //SendClientMessage id, -1, "ERR, Try Angain Later!"; // debug
-            printf "\nERR.. response:%d, request:%d, reason:%s\n", id, _request_, "Limit Response";
-
-            new __fmt[200];
-            format __fmt, sizeof(__fmt), "%s%s", req_msg[id], "..don't make it long"; // replace response. for fix limit message
-            req_msg[id] = __fmt;
-
-            ++_request_;
-            RequestToChatBot(req_msg[id], id);
-
-            neq = 1;
         }
         else { /// @summary otherwise it will be given in the form of player dialogue
 
