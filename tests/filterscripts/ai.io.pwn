@@ -187,7 +187,7 @@ public OnPlayerSpawn ( \
             return 0;
         }
 
-        new prompt[144];
+        new prompt[ 144 + 1 ];
         if ( strfind ( __msg_content, "ai", true ) == 0 )
         {
             strmid(prompt, __msg_content[2], 0, sizeof(prompt), strlen(__msg_content));
@@ -230,7 +230,7 @@ public OnPlayerText (playerid, text[])
      * Example: "ai, What is Los Santos?"
     */
 
-    new prompt[ 144 ];
+    new prompt[ 144 + 1 ];
     if ( strfind ( text, "ai", true ) == 0 )
     {
         strmid(prompt, text[2], 0, sizeof(prompt), strlen(text));
