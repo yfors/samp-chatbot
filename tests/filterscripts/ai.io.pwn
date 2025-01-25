@@ -269,6 +269,9 @@ public OnChatBotResponse (prompt[],
         if ( resLenght < 1 ) {
             //SendClientMessage id, -1, "ERR, Try Angain Later!"; // debug
             printf "\nERR.. response:%d, request:%d, reason:%s\n", id, _request_, "No Response";
+
+            --_request_;
+
             neq = 1;
         }
         if ( resLenght > 512 ) { // max info dialog
@@ -276,7 +279,7 @@ public OnChatBotResponse (prompt[],
             printf "\nERR.. response:%d, request:%d, reason:%s\n", id, _request_, "Limit Response";
 
             new __fmt[200];
-            format __fmt, sizeof(__fmt), "%s%s", req_msg[id], "..simple"; // simple response, for fix limit message
+            format __fmt, sizeof(__fmt), "%s%s", req_msg[id], "..simple"; // simple response. for fix limit message
             req_msg[id] = __fmt;
 
             ++_request_;
@@ -307,13 +310,16 @@ public OnChatBotResponse (prompt[],
         if ( resLenght < 1 ) { // no response
             //DCC_SendChannelMessage __channel, "ERR, Try Angain Later!"; // debug
             printf "\nERR.. response:%d, request:%d, reason:%s\n", id, _request_, "No Response";
+
+            --_request_;
+
             neq = 1;
         } elif ( resLenght > 2000 ) { // discord limit message
             //DCC_SendChannelMessage __channel, "ERR, Try Angain Later!"; // debug
             printf "\nERR.. response:%d, request:%d, reason:%s\n", id, _request_, "Limit Response";
 
             new __fmt[200];
-            format __fmt, sizeof(__fmt), "%s%s", req_msg[id], "..simple"; // simple response, for fix limit message
+            format __fmt, sizeof(__fmt), "%s%s", req_msg[id], "..simple"; // simple response. for fix limit message
             req_msg[id] = __fmt;
 
             ++_request_;
