@@ -16,8 +16,8 @@
 
 #define __DCC // no discord? remove here
 #if defined __DCC
-    #define API_CHANNEL      "0000111100001111" // your channel
-    /// @summary If you don't change the value in the definition above then if you activate the AI ​​Discord chat-bot there will be no response.
+    #define API_CHANNEL      "0000111100001111" // @summary If you don't change the value in this definition then if you activate the AI ​​Discord chat-bot there will be no response.
+
     #include <discord-connector>
 
     new DCC_Channel:__channel;
@@ -53,8 +53,7 @@ new _rand_words_[][] = { // random words
     "Koala", "Lighthouse", "Moonlight", "Necklace", "Owl", 
     "Parrot", "Quokka", "River", "Starfish", "Turtle", 
     "Umbrella", "Vase", "Whale", "Yacht", "Zucchini"
-};
-/// @summary The random chat function above is for combined random chat if you only send the message "ai" without adding any questions.
+}; /// @summary The random chat function is for combined random chat if you only send the message "ai" without adding any questions.
 
 enum
 {
