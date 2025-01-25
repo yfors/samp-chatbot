@@ -150,65 +150,65 @@ public OnPlayerSpawn (playerid)
 }
 
 #if defined __DCC
-    public DCC_OnMessageCreate ( DCC_Message: message )
+public DCC_OnMessageCreate ( DCC_Message: message )
+{
+    /**
+     * Example: "ai, How Are you?"
+     * Example: "ai, My name is socket, you?"
+     * Example: "ai, What is Los Santos?"
+     */
+
+    new
+        __msg_content [ 144 + 1 ],
+        DCC_User:__author,
+        bool:__isBot
+    ;
+
+    @resetchannel
+    __channel = DCC_FindChannelById(API_CHANNEL);
+
+    DCC_GetMessageContent (message, __msg_content);
+    DCC_GetMessageAuthor (message, __author);
+    DCC_IsUserBot (__author, __isBot);
+
+    if ( __isBot ) // fix loop, check chat is not from bot
     {
-        /**
-         * Example: "ai, How Are you?"
-         * Example: "ai, My name is socket, you?"
-         * Example: "ai, What is Los Santos?"
-         */
+        return 0;
+    }
 
-        new
-            __msg_content [ 144 + 1 ],
-            DCC_User:__author,
-            bool:__isBot
-        ;
-    
-        @resetchannel
-        __channel = DCC_FindChannelById(API_CHANNEL);
-    
-        DCC_GetMessageContent (message, __msg_content);
-        DCC_GetMessageAuthor (message, __author);
-        DCC_IsUserBot (__author, __isBot);
-    
-        if ( __isBot ) // fix loop, check chat is not from bot
-        {
-            return 0;
-        }
+    new prompt[ 144 + 1 ];
+    if ( strfind ( __msg_content, "ai", true ) == 0 )
+    {
+        strmid(prompt, __msg_content[2], 0, sizeof(prompt), strlen(__msg_content));
 
-        new prompt[ 144 + 1 ];
-        if ( strfind ( __msg_content, "ai", true ) == 0 )
-        {
-            strmid(prompt, __msg_content[2], 0, sizeof(prompt), strlen(__msg_content));
-    
-            if ( strlen ( prompt ) < 1) {
-                new rand = random ( 5 ) + 1;
-                switch ( rand ) {
-                    case 1:
-                        DCC_SendChannelMessage __channel, GetSystemPrompt;
-                    case 2 .. 5:
-                    {
-                        new __rand = random(sizeof(_rand_words_));
-                        
-                        new stringEx [ 144 + 1 ];
-                        strmid(stringEx, _rand_words_[rand], 0, strlen(_rand_words_[__rand]), sizeof(stringEx));
-                        
-                        @resetstring
-                        format(string_, sizeof(string_), "%s", stringEx);
-                        DCC_SendChannelMessage __channel, string_;
-                    }
+        if ( strlen ( prompt ) < 1) {
+            new rand = random ( 5 ) + 1;
+            switch ( rand ) {
+                case 1:
+                    DCC_SendChannelMessage __channel, GetSystemPrompt;
+                case 2 .. 5:
+                {
+                    new __rand = random(sizeof(_rand_words_));
+                    
+                    new stringEx [ 144 + 1 ];
+                    strmid(stringEx, _rand_words_[rand], 0, strlen(_rand_words_[__rand]), sizeof(stringEx));
+                    
+                    @resetstring
+                    format(string_, sizeof(string_), "%s", stringEx);
+                    DCC_SendChannelMessage __channel, string_;
                 }
             }
-
-            req_msg[_:__author] = prompt;
-
-            ++_request_;
-            RequestToChatBot(prompt, _:__author);
-    
-            return 0;
         }
-        return 1;
+
+        req_msg[_:__author] = prompt;
+
+        ++_request_;
+        RequestToChatBot(prompt, _:__author);
+
+        return 0;
     }
+    return 1;
+}
 #endif
 
 public OnPlayerText (playerid, text[])
