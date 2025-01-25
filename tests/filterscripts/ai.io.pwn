@@ -264,6 +264,7 @@ public OnChatBotResponse (prompt[],
     @resetchannel
     __channel = DCC_FindChannelById(API_CHANNEL);
 #endif
+    new neq=0;
     new resLenght = strlen(response);
     if ( IsPlayerConnected(id) )
     {
@@ -291,7 +292,6 @@ public OnChatBotResponse (prompt[],
                             "Close", "";
         }
     } else {
-            new neq=0;
 #if defined __DCC
         if ( resLenght < 1 ) { // limit message
             DCC_SendChannelMessage __channel, "ERR, Try Angain Later!"; // debug
@@ -316,7 +316,7 @@ public OnChatBotResponse (prompt[],
             printf "response=%d, request=%d, lenght=%d", id, _request_, resLenght;
     }
     else {
-        None;
+        None
     }
 #endif
     return 1;
