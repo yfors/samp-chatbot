@@ -91,10 +91,10 @@ public __model_AI ()
     new rand = random ( 4 ) + 1;
     switch ( rand ) {
         case 1: {
-            SetModel "gemma2-9b-it"; // gemma
+            SetModel "gemma2-9b-it"; // gemma2 - 9b param
         }
         case 2: {
-            SetModel "llama3-70b-8192"; // llma 3
+            SetModel "llama3-70b-8192"; // llma 3 - 70b param
         }
         case 3 .. 4: {
             goto default_model;
@@ -264,7 +264,7 @@ public OnChatBotResponse (prompt[],
     new resLenght = strlen(response);
     if ( IsPlayerConnected(id) )
     {
-        if ( resLenght < 1 ) {
+        if ( resLenght < 1 ) { // no response
             //SendClientMessage id, -1, "ERR, Try Angain Later!"; // debug
             printf "\nERR.. response:%d, request:%d, reason:%s\n", id, _request_, "No Response";
 
