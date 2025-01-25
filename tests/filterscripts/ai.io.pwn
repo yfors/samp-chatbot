@@ -33,13 +33,13 @@
 //
 #define API_C_T_MODEL  (1200000)                                        // time miliseconds change a.i model
 //
-#define first_question "welcome message"                               // first question
+#define FIRST_QUEST "welcome message"                               // first question
 //
 #include "samp-chatbot.inc"
 
-new __request;
+new _request_;
 
-new __rand_words[][] = { // random words
+new _rand_words_[][] = { // random words
     "Apple", "Balloon", "Computer", "Dolphin", "Elephant", 
     "Forest", "Giraffe", "House", "Island", "Jungle", 
     "Kangaroo", "Lemon", "Mountain", "Night", "Ocean", 
@@ -57,35 +57,30 @@ enum
     CHATBOT_DIALOG = 1945
 };
 
-new __SYS_PROMPT [ 128 ],
-    __SYS_RESPONSE [ MAX_PLAYERS ][ MAX_TEXT_RESPONSE ];
+new GetSystemPrompt [ 128 ],
+    GetSystemResponse [ MAX_PLAYERS ][ MAX_TEXT_RESPONSE ];
 
 #define func::%0(%1) \             
     forward %0(%1); \
     public %0(%1)
-#define __func:: \             
+/// ^ function
+#define _func:: \             
     stock
-#define logprintf \          
-    printf
-#define logprint \         
-    print
+/// ^ stock
 #define elif \          
     else if
-#define Ok \
-    return 1;
-#define None \
-    return 0;
+/// ^ else if
 
 #define @resetprompt \
     SetSystemPrompt("");
-__func:: SetSystemPromptEx(__prompt[] = "Assistant")
+_func:: SetSystemPromptEx(__prompt[] = "Assistant")
 {
     @resetprompt
     SetSystemPrompt __prompt;
 
-    format __SYS_PROMPT, sizeof ( __SYS_PROMPT ), "%s", __prompt;
+    format GetSystemPrompt, sizeof ( GetSystemPrompt ), "%s", __prompt;
 
-    Ok;
+    return 1;
 }
 
 forward __model_AI ();
@@ -99,18 +94,15 @@ public __model_AI ()
         case 2: {
             SetModel "llama3-70b-8192"; // llma 3
         }
-        case 3: {
-            SetModel "llama-3.3-70b-specdec"; // llma 3.3
-        }
-        case 4: {
-            goto __default;
+        case 3 .. 4: {
+            goto default_model;
         }
     }
 
-__default: // default here
+default_model: // default here
     SetModel API_MODEL;
 
-    Ok;
+    return 1;
 }
 
 #define Initialize. Initialize_
@@ -124,39 +116,40 @@ func:: Initialize_AI ()
 #if defined __DCC
     DCC_SetBotActivity API_STATUS;
 #endif
-    __request = 0;
+    _request_ = 0;
 
 #if defined __DCC
     @resetchannel
     __channel = DCC_FindChannelById(API_CHANNEL);
 
     new fmt [ 128 ];
-    format fmt, sizeof ( fmt ), "%s is Online!", __SYS_PROMPT;
+    format fmt, sizeof ( fmt ), "%s is Online!", GetSystemPrompt;
     DCC_SendChannelMessage __channel, fmt;
 #endif
 
     SetTimer "__model_AI", API_C_T_MODEL, true;
 
-    Ok;
+    return 1;
 }
 
 public OnFilterScriptInit ()
 {
     Initialize.AI();
-    Ok;
+
+    return 1;
 }
 
 public OnFilterScriptExit ()
 {
-    Ok;
+    return 1;
 }
 
 public OnPlayerSpawn ( \ 
     playerid )
 {
-    RequestToChatBot first_question, playerid;
+    RequestToChatBot FIRST_QUEST, playerid; // send first question
 
-    Ok;
+    return 1;
 }
 
 #if defined __DCC
@@ -182,7 +175,7 @@ public OnPlayerSpawn ( \
     
         if ( __isBot )
         {
-            None;
+            return 0;
         }
     
         if ( strfind ( __msg_content, "ai", true ) == 0 )
@@ -194,12 +187,12 @@ public OnPlayerSpawn ( \
                 new rand = random ( 5 ) + 1;
                 switch ( rand ) {
                     case 1:
-                        DCC_SendChannelMessage __channel, __SYS_PROMPT;
+                        DCC_SendChannelMessage __channel, GetSystemPrompt;
                     case 2 .. 5:
                     {
-                        new __rand = random(sizeof(__rand_words));
+                        new __rand = random(sizeof(_rand_words_));
                         new __fmt [ 32 ];
-                        strmid(__fmt, __rand_words[rand], 0, strlen(__rand_words[__rand]), 31);
+                        strmid(__fmt, _rand_words_[rand], 0, strlen(_rand_words_[__rand]), 31);
                             
                         new fmt [ 128 ];
                         format(fmt, sizeof(fmt), "%s", __fmt);
@@ -208,12 +201,12 @@ public OnPlayerSpawn ( \
                 }
             }
     
-            ++__request;
+            ++_request_;
             RequestToChatBot(prompt, _:__author);
     
-            None;
+            return 0;
         }
-        Ok;
+        return 1;
     }
 #endif
 
@@ -233,12 +226,12 @@ public OnPlayerText (playerid, text[])
             new rand = random ( 5 ) + 1;
             switch ( rand ) {
                 case 1:
-                     SendClientMessage playerid, -1, __SYS_PROMPT;
+                     SendClientMessage playerid, -1, GetSystemPrompt;
                 case 2 .. 5:
                 {
-                    new __rand = random(sizeof(__rand_words));
+                    new __rand = random(sizeof(_rand_words_));
                     new __fmt [ 32 ];
-                    strmid(__fmt, __rand_words[rand], 0, strlen(__rand_words[__rand]), 31);
+                    strmid(__fmt, _rand_words_[rand], 0, strlen(_rand_words_[__rand]), 31);
                         
                     new fmt [ 128 ];
                     format(fmt, sizeof(fmt), "%s", __fmt);
@@ -247,12 +240,12 @@ public OnPlayerText (playerid, text[])
             }
         }
 
-        ++__request;
+        ++_request_;
         RequestToChatBot prompt, playerid;
 
-        None;
+        return 0;
     }
-    Ok;
+    return 1;
 }
 
 public OnChatBotResponse (prompt[],
@@ -264,11 +257,11 @@ public OnChatBotResponse (prompt[],
 #endif
     if ( IsPlayerConnected(id) )
     {
-        format __SYS_RESPONSE[id], MAX_TEXT_RESPONSE, "%s", response;
+        format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
         
         if ( strlen( response ) < 144 ) {
             new fmt [ 144 + 1 ];
-            format fmt, sizeof(fmt), "%s", __SYS_RESPONSE[id];
+            format fmt, sizeof(fmt), "%s", GetSystemResponse[id];
             SendClientMessage id, -1, fmt;
         }
         else {
@@ -279,18 +272,18 @@ public OnChatBotResponse (prompt[],
             format fmt, sizeof(fmt), "{FFF070}Hi, %s", _username_;
 
             ShowPlayerDialog id, \
-                CHATBOT_DIALOG, DIALOG_STYLE_MSGBOX, fmt, __SYS_RESPONSE[id], "Close", "";
+                CHATBOT_DIALOG, DIALOG_STYLE_MSGBOX, fmt, GetSystemResponse[id], "Close", "";
         }
     } else {
-        format __SYS_RESPONSE[id], MAX_TEXT_RESPONSE, "%s", response;
+        format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
         #if defined __DCC
-            DCC_SendChannelMessage __channel, __SYS_RESPONSE[id];
+            DCC_SendChannelMessage __channel, GetSystemResponse[id];
         #endif
     }
 
 #if defined __DEBUG
-    printf "response=%d, request=%d", id, __request;
+    printf "response=%d, request=%d", id, _request_;
 #endif
-    Ok;
+    return 1;
 }
 
