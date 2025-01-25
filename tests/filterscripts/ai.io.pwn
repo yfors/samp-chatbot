@@ -267,7 +267,22 @@ public OnChatBotResponse (prompt[],
         format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
         
         if ( resLenght < 1 ) {
-            SendClientMessage id, -1, "ERR, Try Angain Later!"; // debug
+            //SendClientMessage id, -1, "ERR, Try Angain Later!"; // debug
+            printf "\nERR.. response:%d, request:%d, reason:%s\n", id, _request_, "No Response";
+            neq = 1;
+        }
+        if ( resLenght > 512 ) { // max info dialog
+            //SendClientMessage id, -1, "ERR, Try Angain Later!"; // debug
+            printf "\nERR.. response:%d, request:%d, reason:%s\n", id, _request_, "Limit Response";
+
+            new __fmt[200];
+            format __fmt, sizeof(__fmt), "%s%s", req_msg[id], "..simple"; // simple response, for fix limit message
+            req_msg[id] = __fmt;
+
+            ++_request_;
+            RequestToChatBot(req_msg[id], id);
+
+            neq = 1;
         }
         if ( resLenght < 144 ) { /// @summary if the chat is below 144 it will be given in the form of a player message
             @resetstring
@@ -290,11 +305,11 @@ public OnChatBotResponse (prompt[],
     } else {
 #if defined __DCC
         if ( resLenght < 1 ) { // no response
-            DCC_SendChannelMessage __channel, "ERR, Try Angain Later!"; // debug
+            //DCC_SendChannelMessage __channel, "ERR, Try Angain Later!"; // debug
             printf "\nERR.. response:%d, request:%d, reason:%s\n", id, _request_, "No Response";
             neq = 1;
         } elif ( resLenght > 2000 ) { // discord limit message
-            DCC_SendChannelMessage __channel, "ERR, Try Angain Later!"; // debug
+            //DCC_SendChannelMessage __channel, "ERR, Try Angain Later!"; // debug
             printf "\nERR.. response:%d, request:%d, reason:%s\n", id, _request_, "Limit Response";
 
             new __fmt[200];
