@@ -58,7 +58,7 @@ new _request_;
 new _rand_words_[][] = { // random words
     "Apple", "Balloon", "Computer", "Dolphin", "Indonesia", 
     "Forest", "Giraffe", "House", "Island", "Jungle", 
-    "Kangaroo", "Lemon", "Mountain", "Night", "Ocean", 
+    "Kangaroo", "Lemon", "Mountain", "Night", "Ocean"
 }; /// @summary The random chat function is for combined random chat if you only send the message "ai" without adding any questions.
 
 enum
@@ -270,6 +270,14 @@ public OnChatBotResponse (prompt[],
 
             neq = 1;
         }
+        elif ( resLenght >= 1 && resLenght < 144 ) { /// @summary if the chat is below 144 it will be given in the form of a player message
+
+            format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
+
+            @resetstring
+            format string_, sizeof(string_), "%s", GetSystemResponse[id];
+            SendClientMessage id, -1, string_;
+        }
         elif ( resLenght > 512 ) { // max info dialog
             //SendClientMessage id, -1, "ERR, Try Angain Later!"; // debug
             printf "\nERR.. response:%d, request:%d, reason:%s\n", id, _request_, "Limit Response";
@@ -282,14 +290,6 @@ public OnChatBotResponse (prompt[],
             RequestToChatBot(req_msg[id], id);
 
             neq = 1;
-        }
-        if ( resLenght < 144 ) { /// @summary if the chat is below 144 it will be given in the form of a player message
-
-            format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
-
-            @resetstring
-            format string_, sizeof(string_), "%s", GetSystemResponse[id];
-            SendClientMessage id, -1, string_;
         }
         else { /// @summary otherwise it will be given in the form of player dialogue
 
@@ -316,7 +316,7 @@ public OnChatBotResponse (prompt[],
             --_request_;
 
             neq = 1;
-        } elif ( resLenght > 2000 ) { // discord limit message
+        } elif ( resLenght >= 1 && resLenght < 2000 ) { // discord limit message
             //DCC_SendChannelMessage __channel, "ERR, Try Angain Later!"; // debug
             printf "\nERR.. response:%d, request:%d, reason:%s\n", id, _request_, "Limit Response";
 
