@@ -269,7 +269,7 @@ public OnChatBotResponse (prompt[],
 
             neq = 1;
         }
-        elif ( resLenght >= 1 && resLenght < 144 ) { /// @summary if the chat is below 144 it will be given in the form of a player message
+        if ( resLenght < 144 ) { /// @summary if the chat is below 144 it will be given in the form of a player message
 
             format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
 
