@@ -56,11 +56,9 @@ new string_[ MAX_FMT_STRING ];
 new _request_;
 
 new _rand_words_[][] = { // random words
-    "Apple", "Balloon", "Computer", "Dolphin", "Elephant", 
+    "Apple", "Balloon", "Computer", "Dolphin", "Indonesia", 
     "Forest", "Giraffe", "House", "Island", "Jungle", 
     "Kangaroo", "Lemon", "Mountain", "Night", "Ocean", 
-    "Parrot", "Quokka", "River", "Starfish", "Turtle", 
-    "Umbrella", "Vase", "Whale", "Yacht", "Zucchini"
 }; /// @summary The random chat function is for combined random chat if you only send the message "ai" without adding any questions.
 
 enum
