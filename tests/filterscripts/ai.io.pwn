@@ -5,6 +5,7 @@
  */
 
 /// required compile with "_compiler_"
+/// @summary If you want to send a request to the bot with global status, you can use (-1) as the value in the parameter after the string in "RequestToChatBot"
 
 #include <a_samp>
 #include <a_http>
@@ -259,7 +260,7 @@ public OnChatBotResponse (prompt[],
     {
         format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
         
-        if ( strlen( response ) < 144 ) {
+        if ( strlen ( response ) < 144 ) { /// @summary if the chat is below 144 it will be given in the form of a player message
             new fmt [ 144 + 1 ];
             format fmt, sizeof(fmt), "%s", GetSystemResponse[id];
             SendClientMessage id, -1, fmt;
@@ -274,7 +275,7 @@ public OnChatBotResponse (prompt[],
             ShowPlayerDialog id, \
                 CHATBOT_DIALOG, DIALOG_STYLE_MSGBOX, fmt, GetSystemResponse[id], "Close", "";
         }
-    } else {
+    } else { /// @summary otherwise it will be given in the form of player dialogue
         format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
         #if defined __DCC
             DCC_SendChannelMessage __channel, GetSystemResponse[id];
