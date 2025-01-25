@@ -13,6 +13,7 @@
 #include <float>
 
 #define __DEBUG
+#define None
 
 #define __DCC // no discord? remove here
 #if defined __DCC
@@ -290,27 +291,33 @@ public OnChatBotResponse (prompt[],
                             "Close", "";
         }
     } else {
+            new neq=0;
 #if defined __DCC
         if ( resLenght < 1 ) { // limit message
             DCC_SendChannelMessage __channel, "ERR, Try Angain Later!"; // debug
-            goto _noms;
+            printf "\nERR.. response:%d, request:%d, reason:%s", id, _request_, "No Message";
+            neq = 1;
         } elif ( resLenght > 2000 ) {
             DCC_SendChannelMessage __channel, "ERR, Try Angain Later!"; // debug
-            goto _lim;
+            printf "\nERR.. response:%d, request:%d, reason:%s", id, _request_, "Limit Message";
+            neq = 1;
         } else {
             format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
             DCC_SendChannelMessage __channel, GetSystemResponse[id];
         }
-        _noms: printf "\nERR.. response:%d, request:%d, reason:%s", id, _request_, "No Message";
-        _lim:  printf "\nERR.. response:%d, request:%d, reason:%s", id, _request_, "Limit Message";
 #endif
     }
 
 #if defined __DEBUG
-    if ( _request_ == 1 )
-        printf "\nresponse=%d, request=%d, lenght=%d", id, _request_, resLenght;
-    else
-        printf "response=%d, request=%d, lenght=%d", id, _request_, resLenght;
+    if ( neq == 0 ) {
+        if ( _request_ == 1 )
+            printf "\nresponse=%d, request=%d, lenght=%d", id, _request_, resLenght;
+        else
+            printf "response=%d, request=%d, lenght=%d", id, _request_, resLenght;
+    }
+    else {
+        None;
+    }
 #endif
     return 1;
 }
