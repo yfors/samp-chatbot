@@ -277,7 +277,7 @@ public OnChatBotResponse (prompt[],
             format string_, sizeof(string_), "%s", GetSystemResponse[id];
             SendClientMessage id, -1, string_;
         }
-        else {
+        else { /// @summary otherwise it will be given in the form of player dialogue
             new _username_[ MAX_PLAYER_NAME + 1 ];
             GetPlayerName id, _username_, sizeof(_username_);
 
@@ -287,7 +287,7 @@ public OnChatBotResponse (prompt[],
             ShowPlayerDialog id, \
                 CHATBOT_DIALOG, DIALOG_STYLE_MSGBOX, string_, GetSystemResponse[id], "Close", "";
         }
-    } else { /// @summary otherwise it will be given in the form of player dialogue
+    } else {
         format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
         #if defined __DCC
             DCC_SendChannelMessage __channel, GetSystemResponse[id];
