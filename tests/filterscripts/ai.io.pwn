@@ -36,7 +36,7 @@
 //
 #define API_C_T_MODEL  (1200000)                                        // time miliseconds change a.i model
 //
-#define FIRST_QUEST "welcome message"                               // first question
+#define FIRST_QUEST "welcome message"                                  // first question
 //
 #include "samp-chatbot.inc"
 
