@@ -267,6 +267,9 @@ public OnChatBotResponse (prompt[],
     {
         format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
         
+        if ( strlen ( response ) < 1 ) {
+            SendClientMessage id, -1, "ERR, Try Angain Later!"; // debug
+        }
         if ( strlen ( response ) < 144 ) { /// @summary if the chat is below 144 it will be given in the form of a player message
             @resetstring
             format string_, sizeof(string_), "%s", GetSystemResponse[id];
@@ -286,6 +289,9 @@ public OnChatBotResponse (prompt[],
                             "Close", "";
         }
     } else {
+        if ( strlen ( response ) < 1 ) {
+            DCC_SendChannelMessage __channel, "ERR, Try Angain Later!"; // debug
+        } 
         format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
         #if defined __DCC
             DCC_SendChannelMessage __channel, GetSystemResponse[id];
@@ -300,4 +306,3 @@ public OnChatBotResponse (prompt[],
 #endif
     return 1;
 }
-
