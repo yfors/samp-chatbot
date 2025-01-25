@@ -1,4 +1,4 @@
- /// Copyright (c) SimoSbara & Socket, All Repository Contributors.
+/// Copyright (c) SimoSbara & Socket, All Repository Contributors.
 
 /**
  * $ ai.io.pwn
@@ -54,6 +54,7 @@ new _rand_words_[][] = { // random words
     "Parrot", "Quokka", "River", "Starfish", "Turtle", 
     "Umbrella", "Vase", "Whale", "Yacht", "Zucchini"
 };
+/// @summary The random chat function above is for combined random chat if you only send the message "ai" without adding any questions.
 
 enum
 {
