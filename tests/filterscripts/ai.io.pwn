@@ -204,7 +204,7 @@ public OnPlayerSpawn ( \
                         new __rand = random(sizeof(_rand_words_));
                         
                         new stringEx [ 144 + 1 ];
-                        strmid(stringEx, _rand_words_[rand], 0, strlen(_rand_words_[__rand]), 31);
+                        strmid(stringEx, _rand_words_[rand], 0, strlen(_rand_words_[__rand]), sizeof(stringEx));
                         
                         @resetstring
                         format(string_, sizeof(string_), "%s", stringEx);
@@ -244,7 +244,7 @@ public OnPlayerText (playerid, text[])
                     new __rand = random(sizeof(_rand_words_));
                         
                     new stringEx [ 144 + 1 ];
-                    strmid(stringEx, _rand_words_[rand], 0, strlen(_rand_words_[__rand]), 31);
+                    strmid(stringEx, _rand_words_[rand], 0, strlen(_rand_words_[__rand]), sizeof(stringEx));
                         
                     @resetstring
                     format(string_, sizeof(string_), "%s", stringEx);
