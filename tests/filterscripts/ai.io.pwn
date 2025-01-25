@@ -141,7 +141,7 @@ public DCC_OnMessageCreate ( DCC_Message: message )
 {
     /**
      * Example: "ai, How Are you?"
-     * Example: "ai, My name is socket, you?"
+     * Example: "ai, My name is S, you?"
      * Example: "ai, What is Los Santos?"
      */
 
@@ -251,10 +251,10 @@ public OnChatBotResponse (prompt[],
     new resLenght = strlen(response);
     if ( IsPlayerConnected(id) )
     {
-        new len_ = 144;
+        new len_ = 144; // max message
         if ( resLenght < len_ ) { /// @summary if the chat is below 144 it will be given in the form of a player message
 
-            MAX_TEXT_RESPONSE = len_; // max message
+            MAX_TEXT_RESPONSE = len_;
 
             format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
 
