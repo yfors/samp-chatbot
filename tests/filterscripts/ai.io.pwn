@@ -285,7 +285,10 @@ public OnChatBotResponse (prompt[],
             format string_, sizeof(string_), "{FFF070}Hi, %s", _username_;
 
             ShowPlayerDialog id, \
-                CHATBOT_DIALOG, DIALOG_STYLE_MSGBOX, string_, GetSystemResponse[id], "Close", "";
+                CHATBOT_DIALOG, \
+                    DIALOG_STYLE_MSGBOX, \
+                        string_, GetSystemResponse[id], \
+                            "Close", "";
         }
     } else {
         format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
