@@ -290,20 +290,20 @@ public OnChatBotResponse (prompt[],
                             "Close", "";
         }
     } else {
+#if defined __DCC
         if ( resLenght < 1 ) { // limit message
             DCC_SendChannelMessage __channel, "ERR, Try Angain Later!"; // debug
             goto _noms;
         } elif ( resLenght > 2000 ) {
             DCC_SendChannelMessage __channel, "ERR, Try Angain Later!"; // debug
             goto _lim;
+        } else {
+            format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
+            DCC_SendChannelMessage __channel, GetSystemResponse[id];
         }
         _noms: printf "\nERR.. response:%d, request:%d, reason:%s", id, _request_, "No Message";
         _lim:  printf "\nERR.. response:%d, request:%d, reason:%s", id, _request_, "Limit Message";
-
-        format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
-        #if defined __DCC
-            DCC_SendChannelMessage __channel, GetSystemResponse[id];
-        #endif
+#endif
     }
 
 #if defined __DEBUG
