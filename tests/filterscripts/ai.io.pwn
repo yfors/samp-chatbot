@@ -297,7 +297,7 @@ public OnChatBotResponse (prompt[],
             DCC_SendChannelMessage __channel, "ERR, Try Angain Later!"; // debug
             printf "\nERR.. response:%d, request:%d, reason:%s", id, _request_, "No Response";
             neq = 1;
-        } elif ( resLenght > 2000 ) {
+        } elif ( resLenght > 2000 ) { // discord limit message
             DCC_SendChannelMessage __channel, "ERR, Try Angain Later!"; // debug
             printf "\nERR.. response:%d, request:%d, reason:%s", id, _request_, "Limit Response";
             neq = 1;
