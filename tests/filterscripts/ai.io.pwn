@@ -293,7 +293,7 @@ public OnChatBotResponse (prompt[],
         }
     } else {
 #if defined __DCC
-        if ( resLenght < 1 ) { // limit message
+        if ( resLenght < 1 ) { // no response
             DCC_SendChannelMessage __channel, "ERR, Try Angain Later!"; // debug
             printf "\nERR.. response:%d, request:%d, reason:%s", id, _request_, "No Response";
             neq = 1;
