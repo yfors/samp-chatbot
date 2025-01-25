@@ -292,6 +292,7 @@ public OnChatBotResponse (prompt[],
     } else {
         if ( resLenght < 1 || resLenght > 2000 ) { // limit message
             DCC_SendChannelMessage __channel, "ERR, Try Angain Later!"; // debug
+            printf "ERR.. response:%d, request:%d, reason:%s", id, _request_, "Limit Message";
         } 
         format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
         #if defined __DCC
