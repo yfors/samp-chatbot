@@ -9,8 +9,6 @@
 
 #include <a_samp>
 #include <a_http>
-#include <core>
-#include <float>
 
 #define __DEBUG
 
