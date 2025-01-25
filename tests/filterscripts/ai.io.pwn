@@ -5,7 +5,7 @@
  */
 
 /// required compile with "_compiler_"
-/// @summary If you want to send a request to the bot with global status, you can use (-1) as the value in the parameter after the string in "RequestToChatBot"
+/// @summary If you want to send a request to the bot with global status, you can use (-1) as the value in the parameter after the string_ in "RequestToChatBot"
 
 #include <a_samp>
 #include <a_http>
@@ -39,6 +39,13 @@
 #define FIRST_QUEST "welcome message"                               // first question
 //
 #include "samp-chatbot.inc"
+
+#define MAX_FMT_STRING (520)
+new string_[ MAX_FMT_STRING ];
+
+#define @resetstring \
+    string_ = "";
+/// ^ override string_
 
 new _request_;
 
@@ -126,9 +133,9 @@ func:: Initialize_AI ()
     @resetchannel
     __channel = DCC_FindChannelById(API_CHANNEL);
 
-    new fmt [ 128 ];
-    format fmt, sizeof ( fmt ), "%s is Online!", GetSystemPrompt;
-    DCC_SendChannelMessage __channel, fmt;
+    @resetstring
+    format string_, sizeof ( string_ ), "%s is Online!", GetSystemPrompt;
+    DCC_SendChannelMessage __channel, string_;
 #endif
 
     SetTimer "__model_AI", API_C_T_MODEL, true;
@@ -195,12 +202,13 @@ public OnPlayerSpawn ( \
                     case 2 .. 5:
                     {
                         new __rand = random(sizeof(_rand_words_));
-                        new __fmt [ 32 ];
-                        strmid(__fmt, _rand_words_[rand], 0, strlen(_rand_words_[__rand]), 31);
-                            
-                        new fmt [ 128 ];
-                        format(fmt, sizeof(fmt), "%s", __fmt);
-                        DCC_SendChannelMessage __channel, fmt;
+                        
+                        new stringEx [ 144 + 1 ];
+                        strmid(stringEx, _rand_words_[rand], 0, strlen(_rand_words_[__rand]), 31);
+                        
+                        @resetstring
+                        format(string_, sizeof(string_), "%s", stringEx);
+                        DCC_SendChannelMessage __channel, string_;
                     }
                 }
             }
@@ -234,12 +242,13 @@ public OnPlayerText (playerid, text[])
                 case 2 .. 5:
                 {
                     new __rand = random(sizeof(_rand_words_));
-                    new __fmt [ 32 ];
-                    strmid(__fmt, _rand_words_[rand], 0, strlen(_rand_words_[__rand]), 31);
                         
-                    new fmt [ 128 ];
-                    format(fmt, sizeof(fmt), "%s", __fmt);
-                    SendClientMessage playerid, -1, fmt;
+                    new stringEx [ 144 + 1 ];
+                    strmid(stringEx, _rand_words_[rand], 0, strlen(_rand_words_[__rand]), 31);
+                        
+                    @resetstring
+                    format(string_, sizeof(string_), "%s", stringEx);
+                    SendClientMessage playerid, -1, string_;
                 }
             }
         }
@@ -264,19 +273,19 @@ public OnChatBotResponse (prompt[],
         format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
         
         if ( strlen ( response ) < 144 ) { /// @summary if the chat is below 144 it will be given in the form of a player message
-            new fmt [ 144 + 1 ];
-            format fmt, sizeof(fmt), "%s", GetSystemResponse[id];
-            SendClientMessage id, -1, fmt;
+            @resetstring
+            format string_, sizeof(string_), "%s", GetSystemResponse[id];
+            SendClientMessage id, -1, string_;
         }
         else {
             new _username_[ MAX_PLAYER_NAME + 1 ];
             GetPlayerName id, _username_, sizeof(_username_);
 
-            new fmt [ 128 ];
-            format fmt, sizeof(fmt), "{FFF070}Hi, %s", _username_;
+            @resetstring
+            format string_, sizeof(string_), "{FFF070}Hi, %s", _username_;
 
             ShowPlayerDialog id, \
-                CHATBOT_DIALOG, DIALOG_STYLE_MSGBOX, fmt, GetSystemResponse[id], "Close", "";
+                CHATBOT_DIALOG, DIALOG_STYLE_MSGBOX, string_, GetSystemResponse[id], "Close", "";
         }
     } else { /// @summary otherwise it will be given in the form of player dialogue
         format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
