@@ -1,4 +1,4 @@
-/// Copyright (c) SimoSbara & Socket, All Repository Contributors.
+ /// Copyright (c) SimoSbara & Socket, All Repository Contributors.
 
 /**
  * $ ai.io.pwn
@@ -17,11 +17,13 @@
 #define __DCC // no discord? remove here
 #if defined __DCC
     #define API_CHANNEL      "0000111100001111" // your channel
+    /// @summary If you don't change the value in the definition above then if you activate the AI ​​Discord chat-bot there will be no response.
     #include <discord-connector>
 
     new DCC_Channel:__channel;
     #define @resetchannel \
         __channel = DCC_FindChannelById("");
+    /// ^ override channel-id
 #endif
 
 #define MAX_TEXT_RESPONSE (4096)                                            // max lenght text response
@@ -74,6 +76,7 @@ new GetSystemPrompt [ 128 ],
 
 #define @resetprompt \
     SetSystemPrompt("");
+/// ^ override prompt
 _func:: SetSystemPromptEx(__prompt[] = "Assistant")
 {
     @resetprompt
