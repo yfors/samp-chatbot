@@ -225,9 +225,9 @@ public OnPlayerSpawn ( \
 public OnPlayerText (playerid, text[])
 {
     /**
-        * Example: "ai, How Are you?"
-        * Example: "ai, My name is socket, you?"
-        * Example: "ai, What is Los Santos?"
+     * Example: "ai, How Are you?"
+     * Example: "ai, My name is socket, you?"
+     * Example: "ai, What is Los Santos?"
     */
     if ( strfind ( text, "ai", true ) == 0 )
     {
