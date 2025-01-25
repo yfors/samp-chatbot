@@ -41,6 +41,17 @@
 //
 #include "samp-chatbot.inc"
 
+#define func::%0(%1) \             
+    forward %0(%1); \
+    public %0(%1)
+/// ^ function
+#define _func:: \             
+    stock
+/// ^ stock
+#define elif \          
+    else if
+/// ^ else if
+
 #define MAX_FMT_STRING (520)
 new string_[ MAX_FMT_STRING ];
 
@@ -63,19 +74,9 @@ enum
     CHATBOT_DIALOG = 1945
 };
 
+new req_msg[ MAX_PLAYERS ] [ 520 ];
 new GetSystemPrompt [ 128 ],
     GetSystemResponse [ MAX_PLAYERS ][ MAX_TEXT_RESPONSE ];
-
-#define func::%0(%1) \             
-    forward %0(%1); \
-    public %0(%1)
-/// ^ function
-#define _func:: \             
-    stock
-/// ^ stock
-#define elif \          
-    else if
-/// ^ else if
 
 #define @resetprompt \
     SetSystemPrompt("");
@@ -112,8 +113,6 @@ default_model: // default here
     return 1;
 }
 
-new req_msg[ MAX_PLAYERS ] [ 520 ];
-
 #define Initialize. Initialize_
 func:: Initialize_AI ()
 {
@@ -144,20 +143,15 @@ func:: Initialize_AI ()
 public OnFilterScriptInit ()
 {
     Initialize.AI();
-
     return 1;
 }
-
 public OnFilterScriptExit ()
 {
     return 1;
 }
-
-public OnPlayerSpawn ( \ 
-    playerid )
+public OnPlayerSpawn (playerid)
 {
     RequestToChatBot FIRST_QUEST, playerid; // send first question
-
     return 1;
 }
 
