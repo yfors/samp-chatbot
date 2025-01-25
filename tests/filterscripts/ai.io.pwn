@@ -298,9 +298,9 @@ public OnChatBotResponse (prompt[],
             goto _lim;
         }
         _noms:
-            printf "ERR.. response:%d, request:%d, reason:%s", id, _request_, "No Message";
+            printf "\nERR.. response:%d, request:%d, reason:%s", id, _request_, "No Message";
         _lim:
-            printf "ERR.. response:%d, request:%d, reason:%s", id, _request_, "Limit Message";
+            printf "\nERR.. response:%d, request:%d, reason:%s", id, _request_, "Limit Message";
 
         format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
         #if defined __DCC
