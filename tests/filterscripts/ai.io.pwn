@@ -263,14 +263,15 @@ public OnChatBotResponse (prompt[],
     @resetchannel
     __channel = DCC_FindChannelById(API_CHANNEL);
 #endif
+    new resLenght = strlen(response);
     if ( IsPlayerConnected(id) )
     {
         format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
         
-        if ( strlen ( response ) < 1 ) {
+        if ( resLenght < 1 ) {
             SendClientMessage id, -1, "ERR, Try Angain Later!"; // debug
         }
-        if ( strlen ( response ) < 144 ) { /// @summary if the chat is below 144 it will be given in the form of a player message
+        if ( resLenght < 144 ) { /// @summary if the chat is below 144 it will be given in the form of a player message
             @resetstring
             format string_, sizeof(string_), "%s", GetSystemResponse[id];
             SendClientMessage id, -1, string_;
@@ -289,7 +290,7 @@ public OnChatBotResponse (prompt[],
                             "Close", "";
         }
     } else {
-        if ( strlen ( response ) < 1 ) {
+        if ( resLenght < 1 || resLenght > 2000 ) { // limit message
             DCC_SendChannelMessage __channel, "ERR, Try Angain Later!"; // debug
         } 
         format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
@@ -299,7 +300,6 @@ public OnChatBotResponse (prompt[],
     }
 
 #if defined __DEBUG
-    new resLenght = strlen(response);
     if ( _request_ == 1 )
         printf "\nresponse=%d, request=%d, lenght=%d", id, _request_, resLenght;
     else
