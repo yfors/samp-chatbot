@@ -13,11 +13,10 @@
 #include <float>
 
 #define __DEBUG
-#define None
 
 #define __DCC // no discord? remove here
 #if defined __DCC
-    #define API_CHANNEL      "here" /// @summary If you don't change the value in this definition then if you activate the AI ​​Discord chat-bot there will be no response.
+    #define API_CHANNEL      "1315199086231552003" /// @summary If you don't change the value in this definition then if you activate the AI ​​Discord chat-bot there will be no response.
 
     #include <discord-connector>
 
@@ -316,7 +315,7 @@ public OnChatBotResponse (prompt[],
             --_request_;
 
             neq = 1;
-        } elif ( resLenght >= 1 && resLenght < 2000 ) { // discord limit message
+        } elif ( resLenght > 2000 ) { // discord limit message
             //DCC_SendChannelMessage __channel, "ERR, Try Angain Later!"; // debug
             printf "\nERR.. response:%d, request:%d, reason:%s\n", id, _request_, "Limit Response";
 
@@ -341,9 +340,6 @@ public OnChatBotResponse (prompt[],
             printf "\nresponse=%d, request=%d, lenght=%d", id, _request_, resLenght;
         else
             printf "response=%d, request=%d, lenght=%d", id, _request_, resLenght;
-    }
-    else {
-        None
     }
 #endif
     return 1;
