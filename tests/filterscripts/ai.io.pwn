@@ -247,7 +247,7 @@ public OnChatBotResponse (prompt[],
 #endif
     new neq=0;
     new resLenght = strlen(response);
-    if ( IsPlayerConnected(id) )
+    if ( IsPlayerConnected ( id ) )
     {
         new len_ = 144; // max message
         if ( resLenght < len_ ) { /// @summary if the chat is below 144 it will be given in the form of a player message
