@@ -17,7 +17,7 @@
 
 #define __DCC // no discord? remove here
 #if defined __DCC
-    #define API_CHANNEL      "0000111100001111" /// @summary If you don't change the value in this definition then if you activate the AI ​​Discord chat-bot there will be no response.
+    #define API_CHANNEL      "here" /// @summary If you don't change the value in this definition then if you activate the AI ​​Discord chat-bot there will be no response.
 
     #include <discord-connector>
 
@@ -112,6 +112,8 @@ default_model: // default here
     return 1;
 }
 
+new req_msg[ MAX_PLAYERS ] [ 520 ];
+
 #define Initialize. Initialize_
 func:: Initialize_AI ()
 {
@@ -184,10 +186,10 @@ public OnPlayerSpawn ( \
         {
             return 0;
         }
-    
+
+        new prompt[144];
         if ( strfind ( __msg_content, "ai", true ) == 0 )
         {
-            new prompt[144];
             strmid(prompt, __msg_content[2], 0, sizeof(prompt), strlen(__msg_content));
     
             if ( strlen ( prompt ) < 1) {
@@ -208,7 +210,9 @@ public OnPlayerSpawn ( \
                     }
                 }
             }
-    
+
+            req_msg[_:__author] = prompt;
+
             ++_request_;
             RequestToChatBot(prompt, _:__author);
     
@@ -225,9 +229,10 @@ public OnPlayerText (playerid, text[])
      * Example: "ai, My name is socket, you?"
      * Example: "ai, What is Los Santos?"
     */
+
+    new prompt[ 144 ];
     if ( strfind ( text, "ai", true ) == 0 )
     {
-        new prompt[ 144 ];
         strmid(prompt, text[2], 0, sizeof(prompt), strlen(text));
 
         if ( strlen ( prompt ) < 1) {
@@ -248,6 +253,8 @@ public OnPlayerText (playerid, text[])
                 }
             }
         }
+
+        req_msg[playerid] = prompt;
 
         ++_request_;
         RequestToChatBot prompt, playerid;
@@ -300,6 +307,14 @@ public OnChatBotResponse (prompt[],
         } elif ( resLenght > 2000 ) { // discord limit message
             DCC_SendChannelMessage __channel, "ERR, Try Angain Later!"; // debug
             printf "\nERR.. response:%d, request:%d, reason:%s\n", id, _request_, "Limit Response";
+
+            new __fmt[200];
+            format __fmt, sizeof(__fmt), "%s%s", req_msg[id], "..simple";
+            req_msg[id] = __fmt;
+
+            ++_request_;
+            RequestToChatBot(req_msg[id], id);
+
             neq = 1;
         } else {
             format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
