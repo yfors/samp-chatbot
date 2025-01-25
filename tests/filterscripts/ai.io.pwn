@@ -293,7 +293,10 @@ public OnChatBotResponse (prompt[],
     }
 
 #if defined __DEBUG
-    printf "response=%d, request=%d", id, _request_;
+    if ( _request_ < 1 )
+        printf "\nresponse=%d, request=%d", id, _request_;
+    else
+        printf "response=%d, request=%d", id, _request_;
 #endif
     return 1;
 }
