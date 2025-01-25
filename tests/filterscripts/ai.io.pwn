@@ -163,6 +163,7 @@ public OnPlayerSpawn (playerid)
          * Example: "ai, My name is socket, you?"
          * Example: "ai, What is Los Santos?"
          */
+
         new
             __msg_content [ 144 + 1 ],
             DCC_User:__author,
@@ -222,7 +223,7 @@ public OnPlayerText (playerid, text[])
      * Example: "ai, How Are you?"
      * Example: "ai, My name is socket, you?"
      * Example: "ai, What is Los Santos?"
-    */
+     */
 
     new prompt[ 144 + 1 ];
     if ( strfind ( text, "ai", true ) == 0 )
