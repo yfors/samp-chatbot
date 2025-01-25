@@ -297,10 +297,8 @@ public OnChatBotResponse (prompt[],
             DCC_SendChannelMessage __channel, "ERR, Try Angain Later!"; // debug
             goto _lim;
         }
-        _noms:
-            printf "\nERR.. response:%d, request:%d, reason:%s", id, _request_, "No Message";
-        _lim:
-            printf "\nERR.. response:%d, request:%d, reason:%s", id, _request_, "Limit Message";
+        _noms: printf "\nERR.. response:%d, request:%d, reason:%s", id, _request_, "No Message";
+        _lim:  printf "\nERR.. response:%d, request:%d, reason:%s", id, _request_, "Limit Message";
 
         format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
         #if defined __DCC
