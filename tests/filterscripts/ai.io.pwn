@@ -282,7 +282,7 @@ public OnChatBotResponse (prompt[],
             printf "\nERR.. response:%d, request:%d, reason:%s\n", id, _request_, "Limit Response";
 
             new __fmt[200];
-            format __fmt, sizeof(__fmt), "%s%s", req_msg[id], "..simple"; // simple response. for fix limit message
+            format __fmt, sizeof(__fmt), "%s%s", req_msg[id], "..don't make it long"; // replace response. for fix limit message
             req_msg[id] = __fmt;
 
             ++_request_;
