@@ -14,7 +14,7 @@
 
 #define __DCC // no discord? remove here
 #if defined __DCC
-    #define API_CHANNEL      "1315199086231552003" /// @summary If you don't change the value in this definition then if you activate the AI ​​Discord chat-bot there will be no response.
+    #define API_CHANNEL      "000123456789" /// @summary If you don't change the value in this definition then if you activate the AI ​​Discord chat-bot there will be no response.
 
     #include <discord-connector>
 
@@ -40,12 +40,6 @@ new string_[ MAX_FMT_STRING ];
 /// ^ override string_
 
 new request;
-
-new _rand_words_[][] = { // random words
-    "Apple", "Balloon", "Computer", "Dolphin", "Indonesia", 
-    "Forest", "Giraffe", "House", "Island", "Jungle", 
-    "Kangaroo", "Lemon", "Mountain", "Night", "Ocean"
-}; /// @summary The random chat function is for combined random chat if you only send the message "ai" without adding any questions.
 
 enum
 {
@@ -166,31 +160,26 @@ public DCC_OnMessageCreate ( DCC_Message: message )
     {
         strmid(prompt, __msg_content[2], 0, sizeof(prompt), strlen(__msg_content));
 
+        ++request;
+
         if ( strlen ( prompt ) < 1) {
+            --request;
             new rand = random ( 5 ) + 1;
             switch ( rand ) {
                 case 1:
                     DCC_SendChannelMessage __channel, GetSystemPrompt;
                 case 2 .. 5:
                 {
-                    new __rand = random(sizeof(_rand_words_));
-                    
-                    new stringEx [ 144 + 1 ];
-                    strmid(stringEx, _rand_words_[rand], 0, strlen(_rand_words_[__rand]), sizeof(stringEx));
-                    
                     @resetstring
-                    format(string_, sizeof(string_), "%s", stringEx);
+                    format(string_, sizeof(string_), "%s", "Yes!");
                     DCC_SendChannelMessage __channel, string_;
                 }
             }
+        } else {
+            req_msg[_:__author] = prompt;
+            
+            RequestToChatBot(prompt, _:__author);
         }
-
-        req_msg[_:__author] = prompt;
-
-        ++request;
-        RequestToChatBot(prompt, _:__author);
-
-        return 0;
     }
     return 1;
 }
@@ -209,31 +198,30 @@ public OnPlayerText (playerid, text[])
     {
         strmid(prompt, text[2], 0, sizeof(prompt), strlen(text));
 
+        ++request;
+
         if ( strlen ( prompt ) < 1) {
+            --request;
             new rand = random ( 5 ) + 1;
             switch ( rand ) {
                 case 1:
                      SendClientMessage playerid, -1, GetSystemPrompt;
                 case 2 .. 5:
                 {
-                    new __rand = random(sizeof(_rand_words_));
-                        
-                    new stringEx [ 144 + 1 ];
-                    strmid(stringEx, _rand_words_[rand], 0, strlen(_rand_words_[__rand]), sizeof(stringEx));
-                        
                     @resetstring
-                    format(string_, sizeof(string_), "%s", stringEx);
+                    format(string_, sizeof(string_), "%s", "Yes!");
                     SendClientMessage playerid, -1, string_;
+
+                    return 0;
                 }
             }
+        } else {
+            req_msg[playerid] = prompt;
+
+            RequestToChatBot prompt, playerid;
+
+            return 0;
         }
-
-        req_msg[playerid] = prompt;
-
-        ++request;
-        RequestToChatBot prompt, playerid;
-
-        return 0;
     }
     return 1;
 }
