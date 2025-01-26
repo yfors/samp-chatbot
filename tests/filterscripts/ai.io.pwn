@@ -46,7 +46,7 @@ enum
     CHATBOT_DIALOG = 1945
 };
 
-new req_msg[ MAX_PLAYERS ] [ 520 ];
+new req_msg [ MAX_PLAYERS ] [ 520 ];
 new GetSystemPrompt [ 128 ],
     GetSystemResponse [ MAX_PLAYERS ][ 4096 ];
 
