@@ -10,7 +10,7 @@
 #include <a_samp>
 #include <a_http>
 
-#define __DEBUG
+#define __DEBUG // no debug? remove here
 
 #define __DCC // no discord? remove here
 #if defined __DCC
