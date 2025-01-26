@@ -1,4 +1,4 @@
-/// Copyright (c) SimoSbara & Socket, All Repository Contributors.
+/// Copyright (c) SimoSbara & yfors, All Repository Contributors.
 
 /**
  * $ ai.io.pwn
@@ -25,11 +25,11 @@
 #endif
 
 static MAX_TEXT_RESPONSE = 4096;                                                // maximum length of text response
-#    define API_KEY "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" // your api token
-#    define API_MODEL      "llama3-8b-8192"                                   // your default api model
-#    define API_STATUS     "🔥🔥"                                            // your bot activity status
-#    define API_TIMER  (1200000)                                            // time miliseconds change a.i model
-#    define FIRST_QUEST "welcome message"                                  // first question
+#define API_KEY "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" // your api token
+#define API_MODEL      "llama3-8b-8192"                                   // your default api model
+#define API_STATUS     "🔥🔥"                                            // your bot activity status
+#define API_TIMER  (1200000)                                            // time miliseconds change a.i model
+#define FIRST_QUEST "welcome message"                                  // first question
 #include "samp-chatbot.inc"
 
 #define MAX_FMT_STRING (520)
@@ -164,11 +164,11 @@ public DCC_OnMessageCreate ( DCC_Message: message )
 
         if ( strlen ( prompt ) < 1) {
             --request;
-            new rand = random ( 5 ) + 1;
+            new rand = random ( 2 ) + 1;
             switch ( rand ) {
                 case 1:
                     DCC_SendChannelMessage __channel, GetSystemPrompt;
-                case 2 .. 5:
+                case 2:
                 {
                     @resetstring
                     format(string_, sizeof(string_), "%s", "Yes!");
@@ -202,11 +202,11 @@ public OnPlayerText (playerid, text[])
 
         if ( strlen ( prompt ) < 1) {
             --request;
-            new rand = random ( 5 ) + 1;
+            new rand = random ( 2 ) + 1;
             switch ( rand ) {
                 case 1:
                      SendClientMessage playerid, -1, GetSystemPrompt;
-                case 2 .. 5:
+                case 2:
                 {
                     @resetstring
                     format(string_, sizeof(string_), "%s", "Yes!");
@@ -235,6 +235,13 @@ public OnChatBotResponse (prompt[],
 #endif
     new neq=0;
     new resLenght = strlen(response);
+    if ( resLenght < 1 ) { // no response
+        printf "\nERR.. response:%d, request:%d, reason:%s\n", id, request, "No Response";
+
+        --request;
+
+        neq = 1;
+    } 
     if ( IsPlayerConnected ( id ) )
     {
         new len_ = 144; // max message
@@ -271,13 +278,7 @@ public OnChatBotResponse (prompt[],
     } else {
 #if defined __DCC
         new len_ = 2000; // max discord message
-        if ( resLenght < 1 ) { // no response
-            printf "\nERR.. response:%d, request:%d, reason:%s\n", id, request, "No Response";
-
-            --request;
-
-            neq = 1;
-        } else if ( resLenght > len_ ) { // discord limit message
+        if ( resLenght > len_ ) { // discord limit message
             printf "\nERR.. response:%d, request:%d, reason:%s\n", id, request, "Limit Response";
 
             new __fmt[200];
