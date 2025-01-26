@@ -24,7 +24,7 @@
     /// ^ override channel-id
 #endif
 
-static MAX_TEXT_RESPONSE = 4096;                                            // maximum length of text response
+#define MAX_TEXT_RESPONSE = 4096;                                           // maximum length of text response
 #define API_KEY "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" // your api token
 #define API_MODEL      "llama3-8b-8192"                                   // your default api model
 #define API_STATUS     "🔥🔥"                                            // your bot activity status
@@ -247,7 +247,8 @@ public OnChatBotResponse (prompt[],
         new len_ = 144; // max message
         if ( resLenght < len_ ) { /// @summary if the chat is below 144 it will be given in the form of a player message
 
-            MAX_TEXT_RESPONSE = len_;
+        #undef MAX_TEXT_RESPONSE
+            #define MAX_TEXT_RESPONSE (len_)
 
             format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
 
@@ -259,7 +260,8 @@ public OnChatBotResponse (prompt[],
 
             len_ = 512; // max info dialog
 
-            MAX_TEXT_RESPONSE = len_;
+        #undef MAX_TEXT_RESPONSE
+            #define MAX_TEXT_RESPONSE (len_)
             
             format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
 
