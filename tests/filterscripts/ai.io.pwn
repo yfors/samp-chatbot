@@ -24,7 +24,7 @@
     /// ^ override channel-id
 #endif
 
-static MAX_TEXT_RESPONSE = 4096;                                            // maximum length of text response
+static MAX_TEXT_RESPONSE = 4096;                                                // maximum length of text response
 #    define API_KEY "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" // your api token
 #    define API_MODEL      "llama3-8b-8192"                                   // your default api model
 #    define API_STATUS     "🔥🔥"                                            // your bot activity status
