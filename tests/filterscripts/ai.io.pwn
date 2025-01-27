@@ -23,7 +23,7 @@
 #define MAX_TEXT_RESPONSE (4096)                                                   // maximum length of text response
 #define API_KEY        "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" // your api token
 #define API_MODEL      "llama3-8b-8192"                                          // your default api model
-#define API_PROMPT     "Assistant me"                                           // your api prompt
+#define API_PROMPT     "Assistant SA-MP"                                        // your api prompt
 #define API_STATUS     "🔥🔥"                                                  // your bot activity status
 #define API_TIMER      (1200000)                                              // time miliseconds change a.i model
 #define FIRST_QUEST    "welcome message"                                     // first question
@@ -91,7 +91,7 @@ public Initialize_AI ()
     SelectChatBot LLAMA;
     SetAPIKey API_KEY;
     SetModel API_MODEL;
-    SetSystemPromptEx(API_PROMPT);
+    SetSystemPromptEx API_PROMPT;
 
 #if defined __DCC
     DCC_SetBotActivity API_STATUS;
