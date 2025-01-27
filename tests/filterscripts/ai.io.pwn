@@ -57,7 +57,7 @@ stock SetSystemPromptEx (__prompt[] = "Assistant")
 
     format GetSystemPrompt, sizeof ( GetSystemPrompt ), "%s", __prompt;
 
-    return 1;
+    return true;
 }
 
 forward __model_AI ();
@@ -79,7 +79,7 @@ public __model_AI ()
 default_model: // default here
     SetModel API_MODEL;
 
-    return 1;
+    return true;
 }
 
 #define Initialize. Initialize_
@@ -106,22 +106,22 @@ public Initialize_AI ()
 
     SetTimer "__model_AI", API_TIMER, true;
 
-    return 1;
+    return true;
 }
 
 public OnFilterScriptInit ()
 {
     Initialize.AI();
-    return 1;
+    return true;
 }
 public OnFilterScriptExit ()
 {
-    return 1;
+    return true;
 }
 public OnPlayerSpawn (playerid)
 {
     RequestToChatBot FIRST_QUEST, playerid;
-    return 1;
+    return true;
 }
 
 #if defined __DCC
@@ -148,7 +148,7 @@ public DCC_OnMessageCreate ( DCC_Message: message )
 
     if ( __isBot )
     {
-        return 0;
+        return false;
     }
 
     new prompt[ 144 + 1 ];
@@ -177,7 +177,7 @@ public DCC_OnMessageCreate ( DCC_Message: message )
             RequestToChatBot(prompt, _:__author);
         }
     }
-    return 1;
+    return true;
 }
 #endif
 
@@ -208,7 +208,7 @@ public OnPlayerText (playerid, text[])
                     format(string_, sizeof(string_), "%s", "Yes!");
                     SendClientMessage playerid, -1, string_;
 
-                    return 0;
+                    return false;
                 }
             }
         } else {
@@ -216,10 +216,10 @@ public OnPlayerText (playerid, text[])
 
             RequestToChatBot prompt, playerid;
 
-            return 0;
+            return false;
         }
     }
-    return 1;
+    return true;
 }
 
 public OnChatBotResponse (prompt[],
@@ -305,5 +305,5 @@ public OnChatBotResponse (prompt[],
             printf "response=%d, request=%d, lenght=%d", id, request, resLenght;
     }
 #endif
-    return 1;
+    return true;
 }
