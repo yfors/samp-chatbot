@@ -20,12 +20,13 @@
     /// ^ override channel-id
 #endif
 
-#define MAX_TEXT_RESPONSE = 4096;                                           // maximum length of text response
-#define API_KEY "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" // your api token
-#define API_MODEL      "llama3-8b-8192"                                   // your default api model
-#define API_STATUS     "🔥🔥"                                            // your bot activity status
-#define API_TIMER  (1200000)                                            // time miliseconds change a.i model
-#define FIRST_QUEST "welcome message"                                  // first question
+#define MAX_TEXT_RESPONSE = 4096;                                                  // maximum length of text response
+#define API_KEY        "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" // your api token
+#define API_MODEL      "llama3-8b-8192"                                          // your default api model
+#define API_PROMPT     ""                                                       // your api prompt
+#define API_STATUS     "🔥🔥"                                                  // your bot activity status
+#define API_TIMER  (1200000)                                                  // time miliseconds change a.i model
+#define FIRST_QUEST "welcome message"                                        // first question
 #include "samp-chatbot.inc"
 
 #define MAX_FMT_STRING (520)
@@ -85,17 +86,16 @@ default_model: // default here
 forward Initialize_AI ()
 public Initialize_AI ()
 {
+    request = 0;
+
     SelectChatBot LLAMA;
     SetAPIKey API_KEY;
     SetModel API_MODEL;
-    SetSystemPromptEx;
+    SetSystemPromptEx(API_PROMPT);
 
 #if defined __DCC
     DCC_SetBotActivity API_STATUS;
-#endif
-    request = 0;
-
-#if defined __DCC
+    
     @resetchannel
     __channel = DCC_FindChannelById(API_CHANNEL);
 
