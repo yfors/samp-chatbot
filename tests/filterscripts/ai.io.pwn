@@ -278,7 +278,7 @@ public OnChatBotResponse (prompt[],
         new len_ = 2000;
         if ( resLenght > len_ ) {
             printf "\nERR.. response:%d, request:%d, reason:%s\n", id, request, "Limit Response";
-
+            
             new __fmt[200];
             format __fmt, sizeof(__fmt), "%s%s", req_msg[id], "..simple";
             req_msg[id] = __fmt;
@@ -288,6 +288,9 @@ public OnChatBotResponse (prompt[],
 
             neq = 1;
         } else {
+        #undef MAX_TEXT_RESPONSE
+            #define MAX_TEXT_RESPONSE (len_)
+
             format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
             DCC_SendChannelMessage __channel, GetSystemResponse[id];
         }
