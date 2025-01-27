@@ -185,7 +185,7 @@ public OnPlayerText (playerid, text[])
 {
     /**
      * Example: "ai, How Are you?"
-     * Example: "ai, My name is socket, you?"
+     * Example: "ai, My name is yfors, you?"
      * Example: "ai, What is Los Santos?"
      */
 
