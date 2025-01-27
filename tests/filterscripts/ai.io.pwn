@@ -11,7 +11,7 @@
 
 #define __DCC
 #if defined __DCC
-    #define API_CHANNEL      "000123456789"
+    #define API_CHANNEL      "000123456789" // your discord server channel
     #include <discord-connector>
 
     new DCC_Channel:__channel;
