@@ -120,7 +120,7 @@ public OnFilterScriptExit ()
 }
 public OnPlayerSpawn (playerid)
 {
-    RequestToChatBot FIRST_QUEST, playerid; // send first question
+    RequestToChatBot FIRST_QUEST, playerid;
     return 1;
 }
 
@@ -146,7 +146,7 @@ public DCC_OnMessageCreate ( DCC_Message: message )
     DCC_GetMessageAuthor (message, __author);
     DCC_IsUserBot (__author, __isBot);
 
-    if ( __isBot ) // fix loop, check chat is not from bot
+    if ( __isBot )
     {
         return 0;
     }
@@ -231,7 +231,7 @@ public OnChatBotResponse (prompt[],
 #endif
     new neq=0;
     new resLenght = strlen(response);
-    if ( resLenght < 1 ) { // no response
+    if ( resLenght < 1 ) {
         printf "\nERR.. response:%d, request:%d, reason:%s\n", id, request, "No Response";
 
         --request;
@@ -240,8 +240,8 @@ public OnChatBotResponse (prompt[],
     } 
     if ( IsPlayerConnected ( id ) )
     {
-        new len_ = 144; // max message
-        if ( resLenght < len_ ) { /// @summary if the chat is below 144 it will be given in the form of a player message
+        new len_ = 144;
+        if ( resLenght < len_ ) {
 
         #undef MAX_TEXT_RESPONSE
             #define MAX_TEXT_RESPONSE (len_)
@@ -252,9 +252,9 @@ public OnChatBotResponse (prompt[],
             format string_, sizeof(string_), "%s", GetSystemResponse[id];
             SendClientMessage id, -1, string_;
         }
-        else { /// @summary otherwise it will be given in the form of player dialogue
+        else {
 
-            len_ = 512; // max info dialog
+            len_ = 512;
 
         #undef MAX_TEXT_RESPONSE
             #define MAX_TEXT_RESPONSE (len_)
@@ -275,12 +275,12 @@ public OnChatBotResponse (prompt[],
         }
     } else {
 #if defined __DCC
-        new len_ = 2000; // max discord message
-        if ( resLenght > len_ ) { // discord limit message
+        new len_ = 2000;
+        if ( resLenght > len_ ) {
             printf "\nERR.. response:%d, request:%d, reason:%s\n", id, request, "Limit Response";
 
             new __fmt[200];
-            format __fmt, sizeof(__fmt), "%s%s", req_msg[id], "..simple"; // simple response. for fix limit message
+            format __fmt, sizeof(__fmt), "%s%s", req_msg[id], "..simple";
             req_msg[id] = __fmt;
 
             ++request;
