@@ -1,21 +1,17 @@
-/// Copyright (c) SimoSbara & yfors, All Repository Contributors.
-
 /**
  * $ ai.io.pwn
  */
 
 /// required compile with "_compiler_"
-/// @summary If you want to send a request to the bot with global status, you can use (-1) as the value in the parameter after the string_ in "RequestToChatBot"
 
 #include <a_samp>
 #include <a_http>
 
-#define __DEBUG // no debug? remove here
+#define __DEBUG
 
-#define __DCC // no discord? remove here
+#define __DCC
 #if defined __DCC
-    #define API_CHANNEL      "000123456789" /// @summary If you don't change the value in this definition then if you activate the AI ​​Discord chat-bot there will be no response.
-
+    #define API_CHANNEL      "000123456789"
     #include <discord-connector>
 
     new DCC_Channel:__channel;
@@ -33,7 +29,7 @@
 #include "samp-chatbot.inc"
 
 #define MAX_FMT_STRING (520)
-new string_[ MAX_FMT_STRING ];
+new string_ [ MAX_FMT_STRING ];
 
 #define @resetstring \
     string_ = "";
@@ -53,7 +49,7 @@ new GetSystemPrompt [ 128 ],
 #define @resetprompt \
     SetSystemPrompt("");
 /// ^ override prompt
-stock SetSystemPromptEx(__prompt[] = "Assistant")
+stock SetSystemPromptEx (__prompt[] = "Assistant")
 {
     @resetprompt
     SetSystemPrompt __prompt;
