@@ -4,7 +4,7 @@
 #include "PawnPlus" // include pawn-plus
 
 #include "discord-connector" // include discord-connector
-#include "samp-chatbot.inc" // include chatbot
+#include "samp-chatbot.inc" // include samp-chatbot
 
 main(){}
 
