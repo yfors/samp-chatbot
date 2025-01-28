@@ -108,7 +108,7 @@ public client_Initialize ()
     SelectChatBot API_SELECT;
     SetAPIKey API_KEY;
     SetModel API_MODEL;
-    client_Prompt API_PROMPT;
+    client.Prompt API_PROMPT;
 
 #if defined __DCC
     DCC_SetBotActivity API_STATUS;
