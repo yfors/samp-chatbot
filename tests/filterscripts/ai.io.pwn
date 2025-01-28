@@ -24,10 +24,10 @@
 
 #define MAX_TEXT_RESPONSE (4096)                                                    // maximum length of text response
 #define API_KEY        "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"  // your api token
-#define API_PROMPT     "Assistant SA-MP"                                         // your api prompt
-#define API_STATUS     "🔥🔥"                                                   // your bot activity status
-#define API_TIMER      (1200000)                                               // time miliseconds change a.i model
-#define FIRST_QUEST    "welcome message"                                      // first question
+#define API_PROMPT     "Assistant SA-MP"                                          // your api prompt
+#define API_STATUS     "🔥🔥"                                                    // your bot activity status
+#define API_TIMER      (1200000)                                                // time miliseconds change a.i model
+#define FIRST_QUEST    "welcome message"                                       // first question
 #include "samp-chatbot.inc"
 /**
  * CHAT_GPT  (0)
