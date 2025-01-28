@@ -60,16 +60,19 @@ stock SetSystemPromptEx (__prompt[] = "Assistant")
     return true;
 }
 
-forward __model_AI ();
-public __model_AI ()
+#define client. client_
+forward client_Model ();
+public client_Model ()
 {
     new rand = random ( 4 ) + 1;
     switch ( rand ) {
         case 1: {
             SetModel "gemma2-9b-it"; // gemma2 - 9b param
+            print "AI is gemma2-9b Now!"
         }
         case 2: {
             SetModel "llama3-70b-8192"; // llma 3 - 70b param
+            print "AI is llma3-70b Now!"
         }
         case 3 .. 4: {
             goto default_model;
@@ -81,10 +84,8 @@ default_model: // default here
 
     return true;
 }
-
-#define Initialize. Initialize_
-forward Initialize_AI ()
-public Initialize_AI ()
+forward client_Initialize ()
+public client_Initialize ()
 {
     request = 0;
 
@@ -104,14 +105,14 @@ public Initialize_AI ()
     DCC_SendChannelMessage __channel, string_;
 #endif
 
-    SetTimer "__model_AI", API_TIMER, true;
+    SetTimer "client_Model", API_TIMER, true;
 
     return true;
 }
 
 public OnFilterScriptInit ()
 {
-    Initialize.AI();
+    client.Initialize();
     return true;
 }
 public OnFilterScriptExit ()
