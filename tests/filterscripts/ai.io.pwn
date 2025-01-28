@@ -61,7 +61,6 @@ stock client_Prompt(__prompt[] = "Assistant") // ex
 
     return true;
 }
-
 forward client_Model ();
 public client_Model ()
 {
