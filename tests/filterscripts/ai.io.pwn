@@ -49,6 +49,20 @@ new GetSystemPrompt [ 128 ],
 
 #define client. client_
 
+#define __SHA256 \
+    SHA256_PassHash
+forward client_SHA256();
+public client_SHA256()
+{
+    @resetstring
+    format string_, sizeof(string_), API_KEY;
+
+    new client_hash [ 64 + 1 ];
+    __SHA256 string_, "78sdjs86d2h", client_hash, sizeof (client_hash);
+    printf " API Token (SHA256): %s", client_hash;
+    return 1;
+}
+
 #define @resetprompt \
     SetSystemPrompt("");
 /// ^ override prompt
@@ -108,6 +122,8 @@ public client_Initialize ()
     format string_, sizeof ( string_ ), "%s is Online! with Prompt %s ... at %d/%d/%d", GetSystemPrompt, API_PROMPT, y, m, d;
     DCC_SendChannelMessage __channel, string_;
 #endif
+
+    client_SHA256;
 
     SetTimer "client_Model", API_TIMER, true;
 
