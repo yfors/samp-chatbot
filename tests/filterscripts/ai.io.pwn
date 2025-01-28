@@ -29,9 +29,8 @@
 #define FIRST_QUEST    "welcome message"                                     // first question
 #include "samp-chatbot.inc"
 
-#define MAX_FMT_STRING (520)
+#define MAX_FMT_STRING (1024)
 new string_ [ MAX_FMT_STRING ];
-
 #define @resetstring \
     string_ = "";
 /// ^ override string_
