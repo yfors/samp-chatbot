@@ -35,7 +35,6 @@ new string_ [ MAX_FMT_STRING ];
     string_ = "";
 /// ^ override string_
 
-
 enum
 {
     CHATBOT_DIALOG = 1945
