@@ -5,6 +5,18 @@
 
 main(){}
 
+public OnGameModeInit ()
+{
+  SetGameModeText("Test Server's");
+
+  return 1;
+}
+
+public OnGameModeExit()
+{
+  return 1;
+}
+
 public OnPlayerSpawn (playerid)
 {
   new Float:x, Float:y, Float:z;
