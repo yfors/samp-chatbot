@@ -23,7 +23,7 @@ Before choosing a Chat Bot API remember:
 * Gemini is free to use in [certain countries](https://ai.google.dev/gemini-api/docs/available-regions?hl=it)
 * LLAMA is free on https://groq.com/ everywhere and has some premium features (LLAMA hasn't any official API)
   
-## [Example of use](https://github.com/yfors/samp-chatbot/blob/main/tests/filterscripts/ai.io.pwn)
+## [Example of use](https://github.com/yfors/samp-chatbot/tree/main/tests)
 
 ## Installation
 * Download the last [Release](https://github.com/SimoSbara/samp-chatbot/releases).
