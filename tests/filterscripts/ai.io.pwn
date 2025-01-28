@@ -321,9 +321,9 @@ public OnChatBotResponse (prompt[],
 #if defined __DEBUG
     if ( neq == 0 ) {
         if ( client.Request == 1 )
-            printf "\nresponse=%d, client.Request=%d, lenght=%d", id, client.Request, resLenght;
+            printf "\nresponse=%d, request=%d, lenght=%d", id, client.Request, resLenght;
         else
-            printf "response=%d, client.Request=%d, lenght=%d", id, client.Request, resLenght;
+            printf "response=%d, request=%d, lenght=%d", id, client.Request, resLenght;
     }
 #endif
     return true;
