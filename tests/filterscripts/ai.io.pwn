@@ -35,7 +35,6 @@ new string_ [ MAX_FMT_STRING ];
     string_ = "";
 /// ^ override string_
 
-new request;
 
 enum
 {
@@ -47,6 +46,9 @@ new GetSystemPrompt [ 128 ],
     GetSystemResponse [ MAX_PLAYERS ] [ 4096 ];
 
 #define client. client_
+
+new client_request;
+
 #define __SHA256 \
     SHA256_PassHash
 forward client_SHA256 ();
@@ -99,7 +101,7 @@ default_model: // default here
 forward client_Initialize ()
 public client_Initialize ()
 {
-    request = 0;
+    client.request = 0;
 
     SelectChatBot LLAMA;
     SetAPIKey API_KEY;
@@ -174,10 +176,10 @@ public DCC_OnMessageCreate ( DCC_Message: message )
     {
         strmid(prompt, __msg_content[2], 0, sizeof(prompt), strlen(__msg_content));
 
-        ++request;
+        ++client.request;
 
         if ( strlen ( prompt ) < 1) {
-            --request;
+            --client.request;
             new rand = random ( 2 ) + 1;
             switch ( rand ) {
                 case 1:
@@ -212,10 +214,10 @@ public OnPlayerText (playerid, text[])
     {
         strmid(prompt, text[2], 0, sizeof(prompt), strlen(text));
 
-        ++request;
+        ++client.request;
 
         if ( strlen ( prompt ) < 1) {
-            --request;
+            --client.request;
             new rand = random ( 2 ) + 1;
             switch ( rand ) {
                 case 1:
@@ -250,9 +252,9 @@ public OnChatBotResponse (prompt[],
     new neq=0;
     new resLenght = strlen(response);
     if ( resLenght < 1 ) {
-        printf "\nERR.. response:%d, request:%d, reason:%s\n", id, request, "No Response";
+        printf "\nERR.. response:%d, client.request:%d, reason:%s\n", id, client.request, "No Response";
 
-        --request;
+        --client.request;
 
         neq = 1;
     } 
@@ -295,13 +297,13 @@ public OnChatBotResponse (prompt[],
 #if defined __DCC
         new len_ = 2000;
         if ( resLenght > len_ ) {
-            printf "\nERR.. response:%d, request:%d, reason:%s\n", id, request, "Limit Response";
+            printf "\nERR.. response:%d, client.request:%d, reason:%s\n", id, client.request, "Limit Response";
             
             new __fmt[200];
             format __fmt, sizeof(__fmt), "%s%s", req_msg[id], "..simple";
             req_msg[id] = __fmt;
 
-            ++request;
+            ++client.request;
             RequestToChatBot(req_msg[id], id);
 
             neq = 1;
@@ -317,10 +319,10 @@ public OnChatBotResponse (prompt[],
 
 #if defined __DEBUG
     if ( neq == 0 ) {
-        if ( request == 1 )
-            printf "\nresponse=%d, request=%d, lenght=%d", id, request, resLenght;
+        if ( client.request == 1 )
+            printf "\nresponse=%d, client.request=%d, lenght=%d", id, client.request, resLenght;
         else
-            printf "response=%d, request=%d, lenght=%d", id, request, resLenght;
+            printf "response=%d, client.request=%d, lenght=%d", id, client.request, resLenght;
     }
 #endif
     return true;
