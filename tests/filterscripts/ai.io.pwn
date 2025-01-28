@@ -103,12 +103,11 @@ default_model: // default here
 forward client_Initialize ()
 public client_Initialize ()
 {
-    client.request = 0;
-
     SelectChatBot API_SELECT;
     SetAPIKey API_KEY;
     SetModel API_MODEL;
     client.Prompt API_PROMPT;
+    client.request = 0;
 
 #if defined __DCC
     DCC_SetBotActivity API_STATUS;
