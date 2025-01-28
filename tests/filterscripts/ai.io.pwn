@@ -4,15 +4,15 @@
 
 /// required compile with "_compiler_"
 
-#include <a_samp>
-#include <a_http>
+#include "a_samp"
+#include "a_http"
 
 #define __DEBUG
 
 #define __DCC
 #if defined __DCC
     #define API_CHANNEL      "000123456789" // your discord server channel
-    #include <discord-connector>
+    #include "discord-connector"
 
     new DCC_Channel:__channel;
     #define @resetchannel \
