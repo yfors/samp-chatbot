@@ -1,7 +1,5 @@
 #include "a_samp" // include stdlib
-
 #include "fixes" // include samp-fixes
-
 #include "discord-connector" // include discord-connector
 #include "samp-chatbot.inc" // include samp-chatbot
 
