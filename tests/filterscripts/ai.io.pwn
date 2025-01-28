@@ -9,26 +9,33 @@
 
 #define __DEBUG
 
+#define client. client_
+
 #define __DCC
 #if defined __DCC
     #define API_CHANNEL      "000123456789" // your discord server channel
     #include "discord-connector"
 
-    new DCC_Channel:__channel;
+    new DCC_Channel:client.channel;
     #define @resetchannel \
-        __channel = DCC_FindChannelById("");
+        client.channel = DCC_FindChannelById("");
     /// ^ override channel-id
 #endif
 
 #define MAX_TEXT_RESPONSE (4096)                                                    // maximum length of text response
 #define API_KEY        "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"  // your api token
 #define API_MODEL      "llama3-8b-8192"                                           // your default api model
-#define API_SELECT     "LLAMA"                                                   // your ai model
 #define API_PROMPT     "Assistant SA-MP"                                        // your api prompt
 #define API_STATUS     "🔥🔥"                                                  // your bot activity status
 #define API_TIMER      (1200000)                                              // time miliseconds change a.i model
 #define FIRST_QUEST    "welcome message"                                     // first question
 #include "samp-chatbot.inc"
+/**
+ * CHAT_GPT  (0)
+ * GEMINI_AI (1)
+ * LLAMA     (2)
+ */
+#define API_SELECT     LLAMA                                                     // your ai model
 
 #define MAX_FMT_STRING (1024)
 new string_ [ MAX_FMT_STRING ];
@@ -44,8 +51,6 @@ enum
 new req_msg [ MAX_PLAYERS ] [ 520 ];
 new GetSystemPrompt [ 128 ],
     GetSystemResponse [ MAX_PLAYERS ] [ 4096 ];
-
-#define client. client_
 
 new client_request;
 
@@ -112,14 +117,14 @@ public client_Initialize ()
     DCC_SetBotActivity API_STATUS;
     
     @resetchannel
-    __channel = DCC_FindChannelById(API_CHANNEL);
+    client.channel = DCC_FindChannelById(API_CHANNEL);
 
     new y, m, d;
     getdate y, m, d;
 
     @resetstring
     format string_, sizeof ( string_ ), "%s is Online! with Prompt %s ... at %d/%d/%d", GetSystemPrompt, API_PROMPT, y, m, d;
-    DCC_SendChannelMessage __channel, string_;
+    DCC_SendChannelMessage client.channel, string_;
 #endif
 
     client_SHA256;
@@ -160,7 +165,7 @@ public DCC_OnMessageCreate ( DCC_Message: message )
     ;
 
     @resetchannel
-    __channel = DCC_FindChannelById(API_CHANNEL);
+    client.channel = DCC_FindChannelById(API_CHANNEL);
 
     DCC_GetMessageContent (message, __msg_content);
     DCC_GetMessageAuthor (message, __author);
@@ -183,12 +188,12 @@ public DCC_OnMessageCreate ( DCC_Message: message )
             new rand = random ( 2 ) + 1;
             switch ( rand ) {
                 case 1:
-                    DCC_SendChannelMessage __channel, GetSystemPrompt;
+                    DCC_SendChannelMessage client.channel, GetSystemPrompt;
                 case 2:
                 {
                     @resetstring
                     format(string_, sizeof(string_), "%s", "Yes!");
-                    DCC_SendChannelMessage __channel, string_;
+                    DCC_SendChannelMessage client.channel, string_;
                 }
             }
         } else {
@@ -247,7 +252,7 @@ public OnChatBotResponse (prompt[],
 {
 #if defined __DCC
     @resetchannel
-    __channel = DCC_FindChannelById(API_CHANNEL);
+    client.channel = DCC_FindChannelById(API_CHANNEL);
 #endif
     new neq=0;
     new resLenght = strlen(response);
@@ -312,7 +317,7 @@ public OnChatBotResponse (prompt[],
             #define MAX_TEXT_RESPONSE (len_)
 
             format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
-            DCC_SendChannelMessage __channel, GetSystemResponse[id];
+            DCC_SendChannelMessage client.channel, GetSystemResponse[id];
         }
 #endif
     }
