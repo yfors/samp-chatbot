@@ -1,5 +1,8 @@
-#include <a_samp>
-#include <discord-connector>
+#include "a_samp"
+#include "PawnPlus"
+
+#include "discord-connector"
+#include "samp-chatbot.inc"
 
 main(){}
 
