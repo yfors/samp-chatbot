@@ -1,18 +1,18 @@
-#include "a_samp"
+#include "a_samp" // include stdlib
 
-#include "fixes"
-#include "PawnPlus"
+#include "fixes" // include samp-fixes
+#include "PawnPlus" // include pawn-plus
 
-#include "discord-connector"
-#include "samp-chatbot.inc"
+#include "discord-connector" // include discord-connector
+#include "samp-chatbot.inc" // include chatbot
 
 main(){}
 
 public OnPlayerSpawn (playerid)
 {
   new Float:x, Float:y, Float:z;
-  GetPlayerPos(playerid, x, y, z);
-  SetPlayerPos(playerid, x, y, z + 5.0);
+  GetPlayerPos playerid, x, y, z;
+  SetPlayerPos playerid, x, y, z + 5.0; // fixed spawn
 
   return 1;
 }
