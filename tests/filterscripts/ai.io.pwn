@@ -72,11 +72,8 @@ public client_SHA256 ()
 /// ^ override prompt
 stock client_Prompt (__prompt[] = "Assistant") // ex
 {
-    @resetprompt
     SetSystemPrompt __prompt;
-
     format GetSystemPrompt, sizeof ( GetSystemPrompt ), "%s", __prompt;
-
     return true;
 }
 forward client_Model ();
