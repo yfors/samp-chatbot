@@ -119,7 +119,7 @@ public client_Initialize ()
     getdate y, m, d;
 
     @resetstring
-    format string_, sizeof ( string_ ), "%s is Online! with Prompt %s ... at %d/%d/%d", GetSystemPrompt, API_PROMPT, y, m, d;
+    format string_, sizeof ( string_ ), "%s is Online!.. at %d/%d/%d", GetSystemPrompt, API_PROMPT, y, m, d;
     DCC_SendChannelMessage client.channel, string_;
 #endif
 
