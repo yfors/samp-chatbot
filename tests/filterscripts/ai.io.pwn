@@ -1,3 +1,4 @@
+
 /**
  * $ ai.io.pwn
  */
@@ -250,28 +251,29 @@ public OnChatBotResponse (prompt[],
     @resetchannel
     client.channel = DCC_FindChannelById(API_CHANNEL);
 #endif
-    new neq=0;
-    new resLenght = strlen(response);
-    if ( resLenght < 1 ) {
-        printf "\nERR.. response:%d, client.Request:%d, reason:%s\n", id, client.Request, "No Response";
+    new client_EQU = 0;
+    new client_ID = id;
+    new client_Lenght = strlen(response);
+    if ( client.Lenght < 1 ) {
+        printf "\nERR.. response:%d, client.Request:%d, reason:%s\n", client.ID, client.Request, "No Response";
 
         --client.Request;
 
-        neq = 1;
+        client.EQU = 1;
     } 
-    if ( IsPlayerConnected ( id ) )
+    if ( IsPlayerConnected ( client.ID ) )
     {
         new len_ = 144;
-        if ( resLenght < len_ ) {
+        if ( client.Lenght < len_ ) {
 
         #undef MAX_TEXT_RESPONSE
             #define MAX_TEXT_RESPONSE (len_)
 
-            format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
+            format GetSystemResponse[client.ID], MAX_TEXT_RESPONSE, "%s", response;
 
             @resetstring
-            format string_, sizeof(string_), "%s", GetSystemResponse[id];
-            SendClientMessage id, -1, string_;
+            format string_, sizeof(string_), "%s", GetSystemResponse[client.ID];
+            SendClientMessage client.ID, -1, string_;
         }
         else {
 
@@ -280,50 +282,50 @@ public OnChatBotResponse (prompt[],
         #undef MAX_TEXT_RESPONSE
             #define MAX_TEXT_RESPONSE (len_)
             
-            format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
+            format GetSystemResponse[client.ID], MAX_TEXT_RESPONSE, "%s", response;
 
             new _username_[ MAX_PLAYER_NAME + 1 ];
-            GetPlayerName id, _username_, sizeof(_username_);
+            GetPlayerName client.ID, _username_, sizeof(_username_);
 
             @resetstring
             format string_, sizeof(string_), "{FFF070}Hi, %s", _username_;
 
-            ShowPlayerDialog id,
+            ShowPlayerDialog client.ID,
                 CHATBOT_DIALOG,
                     DIALOG_STYLE_MSGBOX,
-                        string_, GetSystemResponse[id],
+                        string_, GetSystemResponse[client.ID],
                             "Close", "";
         }
     } else {
 #if defined __DCC
         new len_ = 2000;
-        if ( resLenght > len_ ) {
-            printf "\nERR.. response:%d, client.Request:%d, reason:%s\n", id, client.Request, "Limit Response";
+        if ( client.Lenght > len_ ) {
+            printf "\nERR.. response:%d, client.Request:%d, reason:%s\n", client.ID, client.Request, "Limit Response";
             
             new __fmt[200];
-            format __fmt, sizeof(__fmt), "%s%s", req_msg[id], "..simple";
-            req_msg[id] = __fmt;
+            format __fmt, sizeof(__fmt), "%s%s", req_msg[client.ID], "..simple";
+            req_msg[client.ID] = __fmt;
 
             ++client.Request;
-            RequestToChatBot(req_msg[id], id);
+            RequestToChatBot(req_msg[client.ID], client.ID);
 
-            neq = 1;
+            client.EQU = 1;
         } else {
         #undef MAX_TEXT_RESPONSE
             #define MAX_TEXT_RESPONSE (len_)
 
-            format GetSystemResponse[id], MAX_TEXT_RESPONSE, "%s", response;
-            DCC_SendChannelMessage client.channel, GetSystemResponse[id];
+            format GetSystemResponse[client.ID], MAX_TEXT_RESPONSE, "%s", response;
+            DCC_SendChannelMessage client.channel, GetSystemResponse[client.ID];
         }
 #endif
     }
 
 #if defined __DEBUG
-    if ( neq == 0 ) {
+    if ( client.EQU == 0 ) {
         if ( client.Request == 1 )
-            printf "\nresponse=%d, request=%d, lenght=%d", id, client.Request, resLenght;
+            printf "\nresponse=%d, request=%d, lenght=%d", client.ID, client.Request, client.Lenght;
         else
-            printf "response=%d, request=%d, lenght=%d", id, client.Request, resLenght;
+            printf "response=%d, request=%d, lenght=%d", client.ID, client.Request, client.Lenght;
     }
 #endif
     return true;
