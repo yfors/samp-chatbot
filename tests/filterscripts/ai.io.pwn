@@ -45,12 +45,14 @@ enum
 
 new req_msg [ MAX_PLAYERS ] [ 520 ];
 new GetSystemPrompt [ 128 ],
-    GetSystemResponse [ MAX_PLAYERS ][ 4096 ];
+    GetSystemResponse [ MAX_PLAYERS ] [ 4096 ];
+
+#define client. client_
 
 #define @resetprompt \
     SetSystemPrompt("");
 /// ^ override prompt
-stock SetSystemPromptEx (__prompt[] = "Assistant")
+stock client_Prompt(__prompt[] = "Assistant") // ex
 {
     @resetprompt
     SetSystemPrompt __prompt;
@@ -60,7 +62,6 @@ stock SetSystemPromptEx (__prompt[] = "Assistant")
     return true;
 }
 
-#define client. client_
 forward client_Model ();
 public client_Model ()
 {
@@ -81,6 +82,7 @@ public client_Model ()
 
 default_model: // default here
     SetModel API_MODEL;
+    printf "AI is %s Now!", API_MODEL;
 
     return true;
 }
@@ -92,7 +94,7 @@ public client_Initialize ()
     SelectChatBot LLAMA;
     SetAPIKey API_KEY;
     SetModel API_MODEL;
-    SetSystemPromptEx API_PROMPT;
+    client_Prompt API_PROMPT;
 
 #if defined __DCC
     DCC_SetBotActivity API_STATUS;
@@ -100,8 +102,11 @@ public client_Initialize ()
     @resetchannel
     __channel = DCC_FindChannelById(API_CHANNEL);
 
+    new y, m, d;
+    getdate y, m, d;
+
     @resetstring
-    format string_, sizeof ( string_ ), "%s is Online!", GetSystemPrompt;
+    format string_, sizeof ( string_ ), "%s is Online! with Prompt %s ... at %d/%d/%d", GetSystemPrompt, API_PROMPT, y, m, d;
     DCC_SendChannelMessage __channel, string_;
 #endif
 
