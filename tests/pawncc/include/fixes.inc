@@ -26551,54 +26551,54 @@ native BAD_GetServerVarAsBool(const varname[]) = GetServerVarAsBool;
  * <fixes>GetConsoleVarAsFloat</fixes>
  */
 
-#if FIX_GetConsoleVarAsFloat
-	stock Float:FIXES_GetConsoleVarAsFloat(const cvar[])
-	{
-		GetConsoleVarAsFloat
-		if (!FIXES_gsServerCFG)
-		{
-			// 0x03A253F3 = stream_distance.
-			#if _FIXES_NPC
-				return
-					printf(FIXES_gscNoNPCConfigs, cvar),
-					0.0;
-			#else
-				return
-					printf("\7\7\7\7\7*** fixes.inc warning: Could not get .cfg \"%s\".", cvar),
-					0.0;
-			#endif
-		}
-		new
-			buffer[16];
-		if (FIXES_GetConsoleVarAsString(cvar, buffer, sizeof (buffer)))
-			return floatstr(buffer);
-		return 0.0;
-	}
-
-	#if _FIXES_SAMP
-		#define _ALS_GetConsoleVarAsFloat
-		#define GetConsoleVarAsFloat( FIXES_GetConsoleVarAsFloat(
-	#endif
-
-	#define _ALS_GetConsoleVarAsFloat__
-	#define GetConsoleVarAsFloat__( FIXES_GetConsoleVarAsFloat(
-
-	#pragma deprecated Use `GetConsoleVarAsFloat`
-	stock Float:FIXES_GetServerVarAsFloat(const cvar[])
-	{
-		return FIXES_GetConsoleVarAsFloat(cvar);
-	}
-
-	#if _FIXES_SAMP
-		#define _ALS_GetServerVarAsFloat
-		#define GetServerVarAsFloat( FIXES_GetServerVarAsFloat(
-	#endif
-
-	#define _ALS_GetServerVarAsFloat__
-	#define GetServerVarAsFloat__( FIXES_GetServerVarAsFloat(
-#else
-	_FIXES_HIDE_PAWNDOC(FIXES_GetServerVarAsFloat_);
-#endif
+/// #if FIX_GetConsoleVarAsFloat
+///	stock Float:FIXES_GetConsoleVarAsFloat(const cvar[])
+///	{
+///		GetConsoleVarAsFloat
+///		if (!FIXES_gsServerCFG)
+///		{
+///			// 0x03A253F3 = stream_distance.
+///			#if _FIXES_NPC
+///				return
+///					printf(FIXES_gscNoNPCConfigs, cvar),
+///					0.0;
+///			#else
+///				return
+///					printf("\7\7\7\7\7*** fixes.inc warning: Could not get .cfg \"%s\".", cvar),
+///					0.0;
+///			#endif
+///		}
+///		new
+///			buffer[16];
+///		if (FIXES_GetConsoleVarAsString(cvar, buffer, sizeof (buffer)))
+///			return floatstr(buffer);
+///		return 0.0;
+///	}
+///
+///	#if _FIXES_SAMP
+///		#define _ALS_GetConsoleVarAsFloat
+///		#define GetConsoleVarAsFloat( FIXES_GetConsoleVarAsFloat(
+///	#endif
+///
+///	#define _ALS_GetConsoleVarAsFloat__
+///	#define GetConsoleVarAsFloat__( FIXES_GetConsoleVarAsFloat(
+///
+///	#pragma deprecated Use `GetConsoleVarAsFloat`
+///	stock Float:FIXES_GetServerVarAsFloat(const cvar[])
+///	{
+///		return FIXES_GetConsoleVarAsFloat(cvar);
+///	}
+///
+///	#if _FIXES_SAMP
+///		#define _ALS_GetServerVarAsFloat
+///		#define GetServerVarAsFloat( FIXES_GetServerVarAsFloat(
+///	#endif
+///
+///	#define _ALS_GetServerVarAsFloat__
+///	#define GetServerVarAsFloat__( FIXES_GetServerVarAsFloat(
+/// #else
+///	_FIXES_HIDE_PAWNDOC(FIXES_GetServerVarAsFloat_);
+/// #endif
 
 /**
  * <library>fixes.inc</library>
