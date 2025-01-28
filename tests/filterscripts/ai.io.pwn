@@ -48,7 +48,6 @@ new GetSystemPrompt [ 128 ],
     GetSystemResponse [ MAX_PLAYERS ] [ 4096 ];
 
 #define client. client_
-
 #define __SHA256 \
     SHA256_PassHash
 forward client_SHA256();
@@ -62,7 +61,6 @@ public client_SHA256()
     printf " API Token (SHA256): %s", client_hash;
     return 1;
 }
-
 #define @resetprompt \
     SetSystemPrompt("");
 /// ^ override prompt
